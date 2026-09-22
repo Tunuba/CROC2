@@ -125,7 +125,46 @@ Loader", lenguaje `PSX:LE:32:default:default`) y corrio su analizador de **firma
 - Esto **confirma PSY-Q** mas alla de los `$Id` sueltos: las firmas coincidieron con la libreria
   real, no es una coincidencia de fechas.
 
-## El pipeline de matching, armado (2026-09-22)
+## CORRECCION IMPORTANTE: el juego de verdad es CROC2.EXE, no SLUS_006.34 (2026-09-22)
+
+Todo el pipeline de abajo se armo apuntando a `SLUS_006.34` pensando que era el ejecutable
+principal. **Es al reves: `SLUS_006.34` es solo un cargador chico.** Dentro de el hay el string
+literal `cdrom:\CROC2.EXE;1` (visto con `scripts\buscar_croc2exe_ref.py`) y trae las funciones
+PSY-Q `Load`/`Exec` — es el patron clasico de un stage0 que carga el ejecutable real desde el
+disco y le salta.
+
+Se importo `extraido\CROC2.EXE` en el mismo proyecto Ghidra (`ghidra\croc2`), mismo metodo que
+`SLUS_006.34` (PsyQ Signatures corrio 122 segundos), exportado a `notas\ghidra\croc2exe\`:
+
+- **972 funciones reales** (contra 685 de SLUS_006.34). `main` mide 6816 bytes (el de
+  SLUS_006.34 media 348). Carga en `0x80010000+`, no en `0x80100000+`.
+- **489 ya nombradas por PSY-Q** (62856 bytes), quedan **483 funciones candidatas —
+  243040 bytes (237 KB)** de codigo propio de Croc 2. Es el numero real a decompilar,
+  comparable a los ~294 KB de Sabrina — las "209 funciones / 44 KB" de mas arriba eran solo el
+  cargador, casi nada.
+- **Es un build de desarrollo, no el recorte de venta**: trae strings de depuracion sin quitar —
+  `Cheat_Menu_Active`, `Magazine_Cheat_Menu_Active` (el mismo truco que ya documentaba
+  `herramientas\Croc-2-mods\cheat_engine_scripts\EnableMagazineCheat.lua`), `Level_Select`,
+  `Level_%d`, y mensajes de error de CD completos (`CD_newmedia: Read error...`,
+  `CdSearchFile: searching %s...`). Explica el tamano (403456 bytes vs 163840) y por que tiene
+  tantas mas funciones.
+- Prioridad de las 483 por tamano (mas facil primero, todas decompilaron sin error de pcode en
+  Ghidra) en **`decomp\prioridad_croc2exe.tsv`** (`scripts\priorizar_funciones.py`). Las 10 mas
+  chicas: `FUN_800131a8`, `FUN_80023740`, `FUN_8003c340`, `FUN_8004486c`, `FUN_8004a090`,
+  `FUN_80012820`, `FUN_80027c94`, `FUN_80044b34`, `FUN_80045978`, `FUN_800463a8` — empezar por
+  ahi en cuanto haya compilador.
+- Primer tipo con evidencia real (no inventado) en `decomp\include\croc2.h`:
+  `FUN_80018e24` referencia una tabla via `PTR_s_Share_Camera_80064a40` (puntero a la cadena
+  "Share_Camera") — unica pista de camara vista hasta ahora, sin campos confirmados.
+- **Pendiente, no hecho todavia**: el pipeline de splat/progreso.tsv de abajo sigue apuntando a
+  `SLUS_006.34`. Falta rehacerlo (o sumarlo aparte) contra `CROC2.EXE`, que es el que de verdad
+  importa. `SLUS_006.34` vale la pena decompilar igual — es chico (163 KB) y es codigo real del
+  juego (el cargador) — pero no es donde esta el 90%+ del trabajo.
+- Comunidad: se busco en decomp.me y en GitHub (`Argonaut-PS1-Reverse`, la org que tiene
+  `Stratigise` para Croc 1 y `hp1` para Harry Potter) — **nadie ha tocado el codigo de Croc 2
+  todavia**, ni ahi ni en ningun otro lado encontrado. Sigue siendo el candidato limpio.
+
+## El pipeline de matching, armado (2026-09-22, apuntando a SLUS_006.34 -- ver correccion arriba)
 
 Se clono `Xeeynamo/croc` de referencia en `herramientas\croc-referencia\` (no se sube, cubierto
 por `herramientas/` en `.gitignore`) para copiar su metodo real en vez de inventar uno. Usa
@@ -175,15 +214,20 @@ a mano.
 
 ## Siguiente, en orden
 
-1. Si Meme consigue el compilador PSY-Q: ponerlo en `decomp\bin\cc1-27`, correr `make all`
+1. **Rehacer el pipeline de splat apuntando a `CROC2.EXE`** (`extraido\CROC2.EXE`, carga en
+   `0x80010000`), usando `notas\ghidra\croc2exe\funciones.tsv` para los simbolos — es donde esta
+   el trabajo de verdad (483 funciones, 237 KB). Dejar el de `SLUS_006.34` como esta, sirve
+   igual para el cargador.
+2. Si Meme consigue el compilador PSY-Q: ponerlo en `decomp\bin\cc1-27`, correr `make all`
    dentro de WSL y verificar que compila igual que hace Croc 1.
-2. Sin compilador: se puede seguir igual con `FUNC=<nombre> make decompile` (usa m2c, ya
-   instalado) para tener un primer borrador en C de cada una de las 209 funciones y anotarlas a
-   mano en `progreso.tsv`, aunque no se pueda confirmar el match byte a byte todavia.
-3. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`);
+3. Sin compilador: se puede seguir igual con `FUNC=<nombre> make decompile` (usa m2c, ya
+   instalado) para tener un primer borrador en C de cada funcion y anotarla a mano en
+   `progreso.tsv`/`prioridad_croc2exe.tsv`, aunque no se pueda confirmar el match byte a byte
+   todavia. Empezar por las mas chicas de `prioridad_croc2exe.tsv`.
+4. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`);
    comparar con como lo hizo Croc 1 en su yml si ayuda.
-4. Investigar que es `CROC2.EXE`, el segundo ejecutable del disco (403456 bytes, sin arrancar
-   por `SYSTEM.CNF`).
+5. Seguir sacando tipos reales (camara, objeto, jugador) en `decomp\include\croc2.h` a medida
+   que se pasen funciones a mano — hoy solo hay una pista (`Share_Camera`), sin campos.
 
 ## Para retomar
 
