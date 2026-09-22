@@ -84,8 +84,8 @@ ejecutable).
    `decomp/CROC2.EXE`). Solo van al repositorio scripts, notas y (si algun dia hay) parches.
    Distinto de la costumbre de la comunidad de decomp (Xeeynamo/croc, chameleonTwistRet publican
    el C completo) — aqui se sigue el criterio de Meme, no el de la comunidad.
-   **Falta**: nombre del repositorio (candidato natural: `Tunuba/CROC2`, igual que
-   `Tunuba/SABRINA`) — confirmar antes de crearlo.
+   **Creado y subido el 2026-09-22: github.com/Tunuba/CROC2** (publico, rama main, primer
+   commit con notas/scripts/.gitignore nada mas).
 
 ## Estructura ya montada (vacia, a la espera del disco)
 
