@@ -1,0 +1,30 @@
+options:
+  platform:     psx
+  basename:     croc2
+  base_path:    ..
+  target_path:  ../extraido/SLUS_006.34
+  asm_path:     asm/croc2
+  asset_path:   assets/croc2
+  src_path:     src/croc2
+  compiler:     GCC
+  symbol_addrs_path:    config/symbols.slus00634.croc2.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.slus00634.croc2.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.slus00634.croc2.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  section_order:
+    - ".rodata"
+    - ".text"
+    - ".data"
+    - ".bss"
+segments:
+  - [0x800, header]
+  - name: croc2
+    type: code
+    start: 0x000800
+    vram:  0x80100000
+    subalign: 4
+    subsegments:
+      - [0x000800, c] # sin separar rodata/data/bss todavia, ver notas/TRASPASO.md
+  - [0x028000]

@@ -125,15 +125,74 @@ Loader", lenguaje `PSX:LE:32:default:default`) y corrio su analizador de **firma
 - Esto **confirma PSY-Q** mas alla de los `$Id` sueltos: las firmas coincidieron con la libreria
   real, no es una coincidencia de fechas.
 
+## El pipeline de matching, armado (2026-09-22)
+
+Se clono `Xeeynamo/croc` de referencia en `herramientas\croc-referencia\` (no se sube, cubierto
+por `herramientas/` en `.gitignore`) para copiar su metodo real en vez de inventar uno. Usa
+**splat** (`ethteck/splat`, plataforma `psx`) + **m2c** + **maspsx** + **asm-differ**, exactamente
+las mismas herramientas que ya estaban instaladas en WSL para Sabrina
+(`~/decomp-herramientas`) — **no hizo falta instalar nada nuevo**, el venv ya tenia `splat64
+0.50.0` y todo lo demas.
+
+Con eso armado en `decomp\`:
+
+- `config/splat.slus00634.croc2.yml`: config de splat para `extraido\SLUS_006.34` (cabecera
+  PS-X EXE leida con `scripts\leer_header_exe.py`: `t_addr=0x80100000`, `t_size=0x27800`,
+  `d_addr`/`b_addr` en cero — el ejecutable no separa rodata/data/bss en la cabecera como si
+  hacia el de Croc 1, asi que por ahora es **un solo segmento de codigo sin partir en
+  rodata/data/bss** — afinar esa frontera es trabajo futuro, no bloquea el resto).
+- `config/symbols.slus00634.croc2.txt`: los 685 simbolos que ya saco Ghidra, generados con
+  `scripts\generar_symbol_addrs.py`.
+- `make extract` (dentro de WSL) corrio `splat split` y genero **796 archivos .s** en
+  `asm/croc2/nonmatchings/800/` y `src/croc2/800.c` con los `INCLUDE_ASM(...)` — no se
+  publican (`decomp/asm/`, `decomp/src/` en `.gitignore`, igual que Sabrina).
+- `decomp\progreso.tsv` (**si se publica**, igual que en Sabrina): las **209 funciones
+  candidatas** (las que Ghidra dejo como `FUN_direccion`, sin nombre de la libreria PSY-Q), todas
+  en estado `SIN_EMPEZAR`.
+- `Makefile`: target `extract` (funciona ya), `all`/`check-compiler` (falla a proposito y con
+  mensaje claro si no esta el compilador), `decompile` (para pasar un `.s` por m2c cuando haya
+  algo que decompilar).
+
+**Que se publica en el repo, verificado contra lo que Sabrina realmente publica** (`git -C
+../SABRINA ls-files decomp`, no supuesto): scripts, `include/*.h` e `*.inc` de splat, los
+`config/*.yml` y `symbols*.txt`, y `progreso.tsv`. Nunca `asm/`, `src/` (el C), `build/`, ni el
+ejecutable. El `.gitignore` de este proyecto ya sigue ese mismo patron.
+
+## Bloqueo, el compilador (2026-09-22, sin resolver)
+
+El Makefile de `Xeeynamo/croc` compila con `CC := ./bin/cc1-27` — un binario de **4.4 MB
+committeado directamente en su repositorio de git** (no lo descarga un script aparte, esta en el
+historial del repo tal cual). Es el `cc1` de PSY-Q (GCC 2.7 modificado), un binario de Sony.
+
+Al clonar `Xeeynamo/croc` como referencia, ese binario **quedo en disco sin querer** (clonar el
+repo lo trae). Se elimino de inmediato
+(`herramientas\croc-referencia\bin\cc1-27`, borrado) y **no se copio a ningun lado de este
+proyecto**. Sigue la misma regla que las ROMs: no se descarga aqui, ni de esa fuente ni de
+ninguna otra. Si Meme decide conseguirlo (el mismo, por su cuenta) va en `decomp\bin\cc1-27` (ya
+gitignorado junto con el resto de `decomp/`); hasta entonces `make extract` funciona pero
+`make all`/`make decompile` no compilan nada, solo dejan el `.s` listo para pasar por m2c y leer
+a mano.
+
 ## Siguiente, en orden
 
-1. Revisar como resolvio `Xeeynamo/croc` el pipeline de matching (de donde saca el compilador
-   PSY-Q, Makefile, splat) y reusar ese enfoque en vez de armar uno propio desde cero.
-2. Splat sobre `SLUS_006.34` con los simbolos ya sacados (`funciones.tsv`) para partirlo en
-   archivos por funcion.
-3. Ir cerrando las 209 funciones sin nombre contra el compilador PSY-Q real (decomp.me o
-   decomp-permuter) hasta igualar byte a byte.
+1. Si Meme consigue el compilador PSY-Q: ponerlo en `decomp\bin\cc1-27`, correr `make all`
+   dentro de WSL y verificar que compila igual que hace Croc 1.
+2. Sin compilador: se puede seguir igual con `FUNC=<nombre> make decompile` (usa m2c, ya
+   instalado) para tener un primer borrador en C de cada una de las 209 funciones y anotarlas a
+   mano en `progreso.tsv`, aunque no se pueda confirmar el match byte a byte todavia.
+3. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`);
+   comparar con como lo hizo Croc 1 en su yml si ayuda.
 4. Investigar que es `CROC2.EXE`, el segundo ejecutable del disco (403456 bytes, sin arrancar
    por `SYSTEM.CNF`).
-5. Resolver el bloqueo 2 (nombre/visibilidad del repo, y si el C va publico como la comunidad o
-   privado como Sabrina) antes de crear el repositorio de GitHub.
+
+## Para retomar
+
+```
+wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && make extract"
+```
+
+Y con el compilador ya puesto en `decomp\bin\cc1-27`:
+
+```
+wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && make all"
+```
