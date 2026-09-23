@@ -16,234 +16,234 @@ direccion	tamano	nombre_ghidra	decompila_limpio	estado	nota
 80057a98	12	FUN_80057a98	si	NO_COMPILA	m2c no puede resolver la tabla de saltos (jr con jump table); necesita trabajo manual
 80059f34	12	FUN_80059f34	si	NO_COMPILA	m2c hace arg0->campo sobre un void*; falta la struct real para los offsets 0x28/0x34
 8005f7b0	12	FUN_8005f7b0	si	DISTINTO	cc1-27 no mueve el store al hueco de retardo del jr (sh antes de j en vez de en el delay slot); limitacion de scheduling del compilador, mismo bytes, distinto orden
-80027cb4	16	FUN_80027cb4	si	SIN_EMPEZAR	
-80042b24	16	FUN_80042b24	si	SIN_EMPEZAR	
-8004af5c	16	FUN_8004af5c	si	SIN_EMPEZAR	
-80050d7c	16	FUN_80050d7c	si	SIN_EMPEZAR	
-80050d8c	16	FUN_80050d8c	si	SIN_EMPEZAR	
-80054d90	16	FUN_80054d90	si	SIN_EMPEZAR	
-80055608	16	FUN_80055608	si	SIN_EMPEZAR	
-80056148	16	FUN_80056148	si	SIN_EMPEZAR	
-800565c8	16	FUN_800565c8	si	SIN_EMPEZAR	
-8005fde0	16	FUN_8005fde0	si	SIN_EMPEZAR	
-8006133c	16	FUN_8006133c	si	SIN_EMPEZAR	
-80027ca0	20	FUN_80027ca0	si	SIN_EMPEZAR	
-8004ee1c	20	FUN_8004ee1c	si	SIN_EMPEZAR	
-80050e08	20	FUN_80050e08	si	SIN_EMPEZAR	
-80050e1c	20	FUN_80050e1c	si	SIN_EMPEZAR	
-8005aa98	20	FUN_8005aa98	si	SIN_EMPEZAR	
-8005ab0c	20	FUN_8005ab0c	si	SIN_EMPEZAR	
-80018fa0	24	FUN_80018fa0	si	SIN_EMPEZAR	
-8003c5c0	24	FUN_8003c5c0	si	SIN_EMPEZAR	
-80043480	24	FUN_80043480	si	SIN_EMPEZAR	
-8004af6c	24	FUN_8004af6c	si	SIN_EMPEZAR	
-800531a0	24	FUN_800531a0	si	SIN_EMPEZAR	
-800557f8	24	FUN_800557f8	si	SIN_EMPEZAR	
-8005b708	24	FUN_8005b708	si	SIN_EMPEZAR	
-8002df94	28	FUN_8002df94	si	SIN_EMPEZAR	
-8004a074	28	FUN_8004a074	si	SIN_EMPEZAR	
-8004c6d8	28	FUN_8004c6d8	si	SIN_EMPEZAR	
-80054c00	28	FUN_80054c00	si	SIN_EMPEZAR	
-80013244	32	FUN_80013244	si	SIN_EMPEZAR	
-80027c54	32	FUN_80027c54	si	SIN_EMPEZAR	
-80027c74	32	FUN_80027c74	si	SIN_EMPEZAR	
-80029fc0	32	FUN_80029fc0	si	SIN_EMPEZAR	
-8002d61c	32	FUN_8002d61c	si	SIN_EMPEZAR	
-8004c588	32	FUN_8004c588	si	SIN_EMPEZAR	
-80050da8	32	FUN_80050da8	si	SIN_EMPEZAR	
-80050dc8	32	FUN_80050dc8	si	SIN_EMPEZAR	
-80050de8	32	FUN_80050de8	si	SIN_EMPEZAR	
-800511ec	32	FUN_800511ec	si	SIN_EMPEZAR	
-8005120c	32	FUN_8005120c	si	SIN_EMPEZAR	
-8005122c	32	FUN_8005122c	si	SIN_EMPEZAR	
-80051270	32	FUN_80051270	si	SIN_EMPEZAR	
-80052634	32	FUN_80052634	si	SIN_EMPEZAR	
-8005aa78	32	FUN_8005aa78	si	SIN_EMPEZAR	
-8005aaac	32	FUN_8005aaac	si	SIN_EMPEZAR	
-8005aacc	32	FUN_8005aacc	si	SIN_EMPEZAR	
-8005aaec	32	FUN_8005aaec	si	SIN_EMPEZAR	
-8005f4d0	32	FUN_8005f4d0	si	SIN_EMPEZAR	
-800613dc	32	FUN_800613dc	si	SIN_EMPEZAR	
-8006191c	32	FUN_8006191c	si	SIN_EMPEZAR	
-80012784	36	FUN_80012784	si	SIN_EMPEZAR	
-8001288c	36	FUN_8001288c	si	SIN_EMPEZAR	
-800128b0	36	FUN_800128b0	si	SIN_EMPEZAR	
-80014958	36	FUN_80014958	si	SIN_EMPEZAR	
-8002de6c	36	FUN_8002de6c	si	SIN_EMPEZAR	
-8003471c	36	FUN_8003471c	si	SIN_EMPEZAR	
-8004b48c	36	FUN_8004b48c	si	SIN_EMPEZAR	
-8004cf58	36	FUN_8004cf58	si	SIN_EMPEZAR	
-8004da48	36	FUN_8004da48	si	SIN_EMPEZAR	
-8005124c	36	FUN_8005124c	si	SIN_EMPEZAR	
-80052e40	36	FUN_80052e40	si	SIN_EMPEZAR	
-800556f8	36	FUN_800556f8	si	SIN_EMPEZAR	
-80061b58	36	FUN_80061b58	si	SIN_EMPEZAR	
-80061ba8	36	FUN_80061ba8	si	SIN_EMPEZAR	
-80010b34	40	FUN_80010b34	si	SIN_EMPEZAR	
-80028c58	40	FUN_80028c58	si	SIN_EMPEZAR	
-80045e5c	40	FUN_80045e5c	si	SIN_EMPEZAR	
-80050278	40	FUN_80050278	si	SIN_EMPEZAR	
-80053d80	40	FUN_80053d80	si	SIN_EMPEZAR	
-80053da8	40	FUN_80053da8	si	SIN_EMPEZAR	
-80054bd0	40	FUN_80054bd0	si	SIN_EMPEZAR	
-8005b5f8	40	FUN_8005b5f8	si	SIN_EMPEZAR	
-8005b620	40	FUN_8005b620	si	SIN_EMPEZAR	
-8005b6e0	40	FUN_8005b6e0	si	SIN_EMPEZAR	
-80012860	44	FUN_80012860	si	SIN_EMPEZAR	
-8001492c	44	FUN_8001492c	si	SIN_EMPEZAR	
-80018f34	44	FUN_80018f34	si	SIN_EMPEZAR	
-8002de90	44	FUN_8002de90	si	SIN_EMPEZAR	
-8003c594	44	FUN_8003c594	si	SIN_EMPEZAR	
-8004594c	44	FUN_8004594c	si	SIN_EMPEZAR	
-80045de8	44	FUN_80045de8	si	SIN_EMPEZAR	
-8004f64c	44	FUN_8004f64c	si	SIN_EMPEZAR	
-80028c28	48	FUN_80028c28	si	SIN_EMPEZAR	
-80033358	48	FUN_80033358	si	SIN_EMPEZAR	
-8004ae68	48	FUN_8004ae68	si	SIN_EMPEZAR	
-8004ae98	48	FUN_8004ae98	si	SIN_EMPEZAR	
-8004aec8	48	FUN_8004aec8	si	SIN_EMPEZAR	
-8004af2c	48	FUN_8004af2c	si	SIN_EMPEZAR	
-8004d018	48	FUN_8004d018	si	SIN_EMPEZAR	
-80053160	48	FUN_80053160	si	SIN_EMPEZAR	
-8001282c	52	FUN_8001282c	si	SIN_EMPEZAR	
-800150dc	52	FUN_800150dc	si	SIN_EMPEZAR	
-80027e8c	52	FUN_80027e8c	si	SIN_EMPEZAR	
-8002ddf4	52	FUN_8002ddf4	si	SIN_EMPEZAR	
-8004aef8	52	FUN_8004aef8	si	SIN_EMPEZAR	
-8004d808	52	FUN_8004d808	si	SIN_EMPEZAR	
-800545c8	52	FUN_800545c8	si	SIN_EMPEZAR	
-800550a4	52	FUN_800550a4	si	SIN_EMPEZAR	
-800156b4	56	FUN_800156b4	si	SIN_EMPEZAR	
-80023708	56	FUN_80023708	si	SIN_EMPEZAR	
-80033880	56	FUN_80033880	si	SIN_EMPEZAR	
-80033924	56	FUN_80033924	si	SIN_EMPEZAR	
-8003395c	56	FUN_8003395c	si	SIN_EMPEZAR	
-800528ec	56	FUN_800528ec	si	SIN_EMPEZAR	
-80054d50	56	FUN_80054d50	si	SIN_EMPEZAR	
-8005506c	56	FUN_8005506c	si	SIN_EMPEZAR	
-8005a234	56	FUN_8005a234	si	SIN_EMPEZAR	
-8005ac70	56	FUN_8005ac70	si	SIN_EMPEZAR	
-80013628	60	FUN_80013628	si	SIN_EMPEZAR	
-80018d1c	60	FUN_80018d1c	si	SIN_EMPEZAR	
-80018de8	60	FUN_80018de8	si	SIN_EMPEZAR	
-80056c28	60	FUN_80056c28	si	SIN_EMPEZAR	
-80056c64	60	FUN_80056c64	si	SIN_EMPEZAR	
-80013204	64	FUN_80013204	si	SIN_EMPEZAR	
-8001885c	64	FUN_8001885c	si	SIN_EMPEZAR	
-80018f60	64	FUN_80018f60	si	SIN_EMPEZAR	
-80028958	64	FUN_80028958	si	SIN_EMPEZAR	
-80044720	64	FUN_80044720	si	SIN_EMPEZAR	
-80044a60	64	FUN_80044a60	si	SIN_EMPEZAR	
-8004590c	64	FUN_8004590c	si	SIN_EMPEZAR	
-800461ac	64	FUN_800461ac	si	SIN_EMPEZAR	
-8004a034	64	FUN_8004a034	si	SIN_EMPEZAR	
-8004c0e0	64	FUN_8004c0e0	si	SIN_EMPEZAR	
-80015fc8	68	FUN_80015fc8	si	SIN_EMPEZAR	
-80023e8c	68	FUN_80023e8c	si	SIN_EMPEZAR	
-80023ed0	68	FUN_80023ed0	si	SIN_EMPEZAR	
-800284e0	68	FUN_800284e0	si	SIN_EMPEZAR	
-8002d5d8	68	FUN_8002d5d8	si	SIN_EMPEZAR	
-8002de28	68	FUN_8002de28	si	SIN_EMPEZAR	
-80046100	68	FUN_80046100	si	SIN_EMPEZAR	
-80048084	68	FUN_80048084	si	SIN_EMPEZAR	
-8004e2e0	68	FUN_8004e2e0	si	SIN_EMPEZAR	
-8005b4b8	68	FUN_8005b4b8	si	SIN_EMPEZAR	
-80018d58	72	FUN_80018d58	si	SIN_EMPEZAR	
-80018da0	72	FUN_80018da0	si	SIN_EMPEZAR	
-800416e8	72	FUN_800416e8	si	SIN_EMPEZAR	
-80045e14	72	FUN_80045e14	si	SIN_EMPEZAR	
-8004cfd0	72	FUN_8004cfd0	si	SIN_EMPEZAR	
-80052924	72	FUN_80052924	si	SIN_EMPEZAR	
-8005296c	72	FUN_8005296c	si	SIN_EMPEZAR	
-80023e40	76	FUN_80023e40	si	SIN_EMPEZAR	
-80035200	76	FUN_80035200	si	SIN_EMPEZAR	
-8003c2f4	76	FUN_8003c2f4	si	SIN_EMPEZAR	
-80045848	80	FUN_80045848	si	SIN_EMPEZAR	
-80045f50	80	FUN_80045f50	si	SIN_EMPEZAR	
-800131b0	84	FUN_800131b0	si	SIN_EMPEZAR	
-80030428	84	FUN_80030428	si	SIN_EMPEZAR	
-8004f2b8	84	FUN_8004f2b8	si	SIN_EMPEZAR	
-80013854	88	FUN_80013854	si	SIN_EMPEZAR	
-80014ab8	88	FUN_80014ab8	si	SIN_EMPEZAR	
-80041634	88	FUN_80041634	si	SIN_EMPEZAR	
-80045fa0	88	FUN_80045fa0	si	SIN_EMPEZAR	
-8001332c	92	FUN_8001332c	si	SIN_EMPEZAR	
-80013388	92	FUN_80013388	si	SIN_EMPEZAR	
-800254f4	92	FUN_800254f4	si	SIN_EMPEZAR	
-8004168c	92	FUN_8004168c	si	SIN_EMPEZAR	
-8004b624	92	FUN_8004b624	si	SIN_EMPEZAR	
-8004f3b8	92	FUN_8004f3b8	si	SIN_EMPEZAR	
-8005b648	92	FUN_8005b648	si	SIN_EMPEZAR	
-8004b92c	96	FUN_8004b92c	si	SIN_EMPEZAR	
-80013264	100	FUN_80013264	si	SIN_EMPEZAR	
-800132c8	100	FUN_800132c8	si	SIN_EMPEZAR	
-8003ade8	100	FUN_8003ade8	si	SIN_EMPEZAR	
-800415d0	100	FUN_800415d0	si	SIN_EMPEZAR	
-80044760	100	FUN_80044760	si	SIN_EMPEZAR	
-80045ff8	100	FUN_80045ff8	si	SIN_EMPEZAR	
-8005ee1c	100	FUN_8005ee1c	si	SIN_EMPEZAR	
-80046144	104	FUN_80046144	si	SIN_EMPEZAR	
-8004b718	104	FUN_8004b718	si	SIN_EMPEZAR	
-8004dae0	104	FUN_8004dae0	si	SIN_EMPEZAR	
-8004de48	104	FUN_8004de48	si	SIN_EMPEZAR	
-800544d0	104	FUN_800544d0	si	SIN_EMPEZAR	
-8005a7e0	104	FUN_8005a7e0	si	SIN_EMPEZAR	
-80015344	108	FUN_80015344	si	SIN_EMPEZAR	
-800301a8	108	FUN_800301a8	si	SIN_EMPEZAR	
-800338b8	108	FUN_800338b8	si	SIN_EMPEZAR	
-8003dc20	108	FUN_8003dc20	si	SIN_EMPEZAR	
-80041478	108	FUN_80041478	si	SIN_EMPEZAR	
-80045cc4	108	FUN_80045cc4	si	SIN_EMPEZAR	
-8005ac04	108	FUN_8005ac04	si	SIN_EMPEZAR	
-8001497c	112	FUN_8001497c	si	SIN_EMPEZAR	
-80014cbc	112	FUN_80014cbc	si	SIN_EMPEZAR	
-80023f14	112	FUN_80023f14	si	SIN_EMPEZAR	
-80041560	112	FUN_80041560	si	SIN_EMPEZAR	
-8004ba38	112	FUN_8004ba38	si	SIN_EMPEZAR	
-8004da70	112	FUN_8004da70	si	SIN_EMPEZAR	
-8004f4c4	112	FUN_8004f4c4	si	SIN_EMPEZAR	
-800612cc	112	FUN_800612cc	si	SIN_EMPEZAR	
-800152d0	116	FUN_800152d0	si	SIN_EMPEZAR	
-80044978	116	FUN_80044978	si	SIN_EMPEZAR	
-800449ec	116	FUN_800449ec	si	SIN_EMPEZAR	
-80045898	116	FUN_80045898	si	SIN_EMPEZAR	
-800127a8	120	FUN_800127a8	si	SIN_EMPEZAR	
-800293e0	120	FUN_800293e0	si	SIN_EMPEZAR	
-80038dd8	120	FUN_80038dd8	si	SIN_EMPEZAR	
-8004449c	120	FUN_8004449c	si	SIN_EMPEZAR	
-80016ce4	124	FUN_80016ce4	si	SIN_EMPEZAR	
-800192cc	124	FUN_800192cc	si	SIN_EMPEZAR	
-800414e4	124	FUN_800414e4	si	SIN_EMPEZAR	
-8004abf8	124	FUN_8004abf8	si	SIN_EMPEZAR	
-800139c4	128	FUN_800139c4	si	SIN_EMPEZAR	
-80044874	128	FUN_80044874	si	SIN_EMPEZAR	
-8004a994	128	FUN_8004a994	si	SIN_EMPEZAR	
-8004c060	128	FUN_8004c060	si	SIN_EMPEZAR	
-8004c6f4	128	FUN_8004c6f4	si	SIN_EMPEZAR	
-80051394	128	FUN_80051394	si	SIN_EMPEZAR	
-800448f4	132	FUN_800448f4	si	SIN_EMPEZAR	
-80059f40	132	FUN_80059f40	si	SIN_EMPEZAR	
-8005b434	132	FUN_8005b434	si	SIN_EMPEZAR	
-80044040	136	FUN_80044040	si	SIN_EMPEZAR	
-80048f00	136	FUN_80048f00	si	SIN_EMPEZAR	
-8005535c	136	FUN_8005535c	si	SIN_EMPEZAR	
-800589e0	136	FUN_800589e0	si	SIN_EMPEZAR	
-80015954	140	FUN_80015954	si	SIN_EMPEZAR	
-80029dd0	140	FUN_80029dd0	si	SIN_EMPEZAR	
-8003011c	140	FUN_8003011c	si	SIN_EMPEZAR	
-8005fa80	140	FUN_8005fa80	si	SIN_EMPEZAR	
-80044b40	144	FUN_80044b40	si	SIN_EMPEZAR	
-8004b89c	144	FUN_8004b89c	si	SIN_EMPEZAR	
-800501e8	144	FUN_800501e8	si	SIN_EMPEZAR	
-80054538	144	FUN_80054538	si	SIN_EMPEZAR	
-80028998	148	FUN_80028998	si	SIN_EMPEZAR	
-80029d3c	148	FUN_80029d3c	si	SIN_EMPEZAR	
-80033388	148	FUN_80033388	si	SIN_EMPEZAR	
-8003be80	148	FUN_8003be80	si	SIN_EMPEZAR	
-80044aa0	148	FUN_80044aa0	si	SIN_EMPEZAR	
-800457b4	148	FUN_800457b4	si	SIN_EMPEZAR	
-8004b680	152	FUN_8004b680	si	SIN_EMPEZAR	
-8004c5a8	152	FUN_8004c5a8	si	SIN_EMPEZAR	
+80027cb4	16	FUN_80027cb4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80027cb4.c:3: for each function it appears in.)
+80042b24	16	FUN_80042b24	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80042b24.c:3: for each function it appears in.)
+8004af5c	16	FUN_8004af5c	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8004af5c.*
+80050d7c	16	FUN_80050d7c	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_80050d7c.c:(.text+0x4): undefined reference to `D_80069150'
+80050d8c	16	FUN_80050d8c	si	DISTINTO	bytes distintos, ver build/verificar/FUN_80050d8c.*
+80054d90	16	FUN_80054d90	si	DISTINTO	bytes distintos, ver build/verificar/FUN_80054d90.*
+80055608	16	FUN_80055608	si	NO_COMPILA	NO_COMPILA (ld): src/croc2exe/FUN_80055608.c:(.text+0x8): undefined reference to `M2C_ERROR'
+80056148	16	FUN_80056148	si	NO_COMPILA	NO_COMPILA (ld): src/croc2exe/FUN_80056148.c:(.text+0x8): undefined reference to `M2C_ERROR'
+800565c8	16	FUN_800565c8	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_800565c8.c:(.text+0x4): undefined reference to `D_800690E4'
+8005fde0	16	FUN_8005fde0	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_8005fde0.c:(.text+0x4): undefined reference to `D_8006E35C'
+8006133c	16	FUN_8006133c	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8006133c.*
+80027ca0	20	FUN_80027ca0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80027ca0.c:3: for each function it appears in.)
+8004ee1c	20	FUN_8004ee1c	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8004ee1c.*
+80050e08	20	FUN_80050e08	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_80050e08.c:(.text+0xc): undefined reference to `D_80069144'
+80050e1c	20	FUN_80050e1c	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_80050e1c.c:(.text+0xc): undefined reference to `D_80069148'
+8005aa98	20	FUN_8005aa98	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005aa98.c:5: request for member `unk36' in something not a structure or union
+8005ab0c	20	FUN_8005ab0c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005ab0c.c:5: request for member `unk36' in something not a structure or union
+80018fa0	24	FUN_80018fa0	si	IGUAL	
+8003c5c0	24	FUN_8003c5c0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8003c5c0.c:5: for each function it appears in.)
+80043480	24	FUN_80043480	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80043480.c:5: `D_800653C8' undeclared (first use this function)
+8004af6c	24	FUN_8004af6c	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_8004af6c.c:(.text+0x4): undefined reference to `D_800684B8'
+800531a0	24	FUN_800531a0	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_800531a0.c:(.text+0xc): undefined reference to `D_8006D654'
+800557f8	24	FUN_800557f8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800557f8.c:6: request for member `unk1B2' in something not a structure or union
+8005b708	24	FUN_8005b708	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_8005b708.c:(.text+0x4): undefined reference to `D_8006D660'
+8002df94	28	FUN_8002df94	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8002df94.c:6: request for member `unk6' in something not a structure or union
+8004a074	28	FUN_8004a074	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8004a074.*
+8004c6d8	28	FUN_8004c6d8	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8004c6d8.*
+80054c00	28	FUN_80054c00	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80054c00.c:5: invalid type argument of `->'
+80013244	32	FUN_80013244	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80013244.c:6: for each function it appears in.)
+80027c54	32	FUN_80027c54	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80027c54.c:5: warning: implicit declaration of function `FUN_800279e4'
+80027c74	32	FUN_80027c74	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80027c74.c:5: warning: implicit declaration of function `FUN_800279e4'
+80029fc0	32	FUN_80029fc0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80029fc0.c:3: for each function it appears in.)
+8002d61c	32	FUN_8002d61c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8002d61c.c:6: for each function it appears in.)
+8004c588	32	FUN_8004c588	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8004c588.*
+80050da8	32	FUN_80050da8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80050da8.c:5: warning: implicit declaration of function `FUN_80058a68'
+80050dc8	32	FUN_80050dc8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80050dc8.c:5: warning: implicit declaration of function `FUN_8005808c'
+80050de8	32	FUN_80050de8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80050de8.c:5: warning: implicit declaration of function `FUN_8005830c'
+800511ec	32	FUN_800511ec	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800511ec.c:5: warning: implicit declaration of function `FUN_800589e0'
+8005120c	32	FUN_8005120c	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8005120c.*
+8005122c	32	FUN_8005122c	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8005122c.*
+80051270	32	FUN_80051270	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80051270.c:5: warning: implicit declaration of function `FUN_80058e0c'
+80052634	32	FUN_80052634	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80052634.c:5: warning: implicit declaration of function `FUN_8004f870'
+8005aa78	32	FUN_8005aa78	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005aa78.c:6: request for member `unk36' in something not a structure or union
+8005aaac	32	FUN_8005aaac	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005aaac.c:6: request for member `unk36' in something not a structure or union
+8005aacc	32	FUN_8005aacc	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005aacc.c:6: request for member `unk36' in something not a structure or union
+8005aaec	32	FUN_8005aaec	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005aaec.c:6: request for member `unk36' in something not a structure or union
+8005f4d0	32	FUN_8005f4d0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005f4d0.c:5: warning: implicit declaration of function `_SpuInit'
+800613dc	32	FUN_800613dc	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800613dc.c:5: warning: implicit declaration of function `SpuSetReverb'
+8006191c	32	FUN_8006191c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8006191c.c:5: warning: implicit declaration of function `SpuSetReverb'
+80012784	36	FUN_80012784	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80012784.c:5: for each function it appears in.)
+8001288c	36	FUN_8001288c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8001288c.c:5: for each function it appears in.)
+800128b0	36	FUN_800128b0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800128b0.c:5: for each function it appears in.)
+80014958	36	FUN_80014958	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80014958.c:4: warning: implicit declaration of function `M2C_ERROR'
+8002de6c	36	FUN_8002de6c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8002de6c.c:5: for each function it appears in.)
+8003471c	36	FUN_8003471c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8003471c.c:3: warning: `var_v1' might be used uninitialized in this function
+8004b48c	36	FUN_8004b48c	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8004b48c.*
+8004cf58	36	FUN_8004cf58	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004cf58.c:7: for each function it appears in.)
+8004da48	36	FUN_8004da48	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8004da48.*
+8005124c	36	FUN_8005124c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005124c.c:5: warning: implicit declaration of function `FUN_8004aec8'
+80052e40	36	FUN_80052e40	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80052e40.c:5: request for member `unk8' in something not a structure or union
+800556f8	36	FUN_800556f8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800556f8.c:5: warning: implicit declaration of function `_SpuSetAnyVoice'
+80061b58	36	FUN_80061b58	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80061b58.c:5: warning: implicit declaration of function `FUN_8004aec8'
+80061ba8	36	FUN_80061ba8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80061ba8.c:5: warning: implicit declaration of function `_SpuSetAnyVoice'
+80010b34	40	FUN_80010b34	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80010b34.c:7: `func_80010AF4' undeclared (first use this function)
+80028c58	40	FUN_80028c58	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80028c58.c:3: warning: `var_v1' might be used uninitialized in this function
+80045e5c	40	FUN_80045e5c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80045e5c.c:7: warning: implicit declaration of function `SpuSetCommonCDMix'
+80050278	40	FUN_80050278	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80050278.c:7: request for member `unk4' in something not a structure or union
+80053d80	40	FUN_80053d80	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: build/verificar/FUN_80053d80.o:src/croc2exe/FUN_80053d80.c:(.text+0x34): more undefined references to `M2C_ERROR' follow
+80053da8	40	FUN_80053da8	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: build/verificar/FUN_80053da8.o:src/croc2exe/FUN_80053da8.c:(.text+0x34): more undefined references to `M2C_ERROR' follow
+80054bd0	40	FUN_80054bd0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80054bd0.c:8: for each function it appears in.)
+8005b5f8	40	FUN_8005b5f8	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_8005b5f8.c:(.text+0x4): undefined reference to `D_8006D640'
+8005b620	40	FUN_8005b620	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_8005b620.c:(.text+0x4): undefined reference to `D_8006D640'
+8005b6e0	40	FUN_8005b6e0	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_8005b6e0.c:(.text+0x20): undefined reference to `D_8006D660'
+80012860	44	FUN_80012860	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80012860.c:5: for each function it appears in.)
+8001492c	44	FUN_8001492c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8001492c.c:6: for each function it appears in.)
+80018f34	44	FUN_80018f34	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80018f34.c:5: warning: implicit declaration of function `FUN_80018d1c'
+8002de90	44	FUN_8002de90	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8002de90.c:6: warning: implicit declaration of function `FUN_8002df94'
+8003c594	44	FUN_8003c594	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8003c594.c:7: warning: implicit declaration of function `FUN_8003c5d8'
+8004594c	44	FUN_8004594c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004594c.c:5: for each function it appears in.)
+80045de8	44	FUN_80045de8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80045de8.c:8: warning: implicit declaration of function `FUN_800510a0'
+8004f64c	44	FUN_8004f64c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004f64c.c:8: `func_8004F678' undeclared (first use this function)
+80028c28	48	FUN_80028c28	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80028c28.c:8: warning: implicit declaration of function `FUN_80028b84'
+80033358	48	FUN_80033358	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80033358.c:9: warning: implicit declaration of function `FUN_80023ed0'
+8004ae68	48	FUN_8004ae68	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004ae68.c:5: request for member `unkC' in something not a structure or union
+8004ae98	48	FUN_8004ae98	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004ae98.c:5: request for member `unk8' in something not a structure or union
+8004aec8	48	FUN_8004aec8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004aec8.c:5: request for member `unk4' in something not a structure or union
+8004af2c	48	FUN_8004af2c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004af2c.c:5: request for member `unk14' in something not a structure or union
+8004d018	48	FUN_8004d018	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_8004d018.c:(.text+0x18): undefined reference to `D_80068624'
+80053160	48	FUN_80053160	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80053160.c:9: warning: implicit declaration of function `_bu_init'
+8001282c	52	FUN_8001282c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8001282c.c:4: request for member `unk8' in something not a structure or union
+800150dc	52	FUN_800150dc	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800150dc.c:6: `D_800758B8' undeclared (first use this function)
+80027e8c	52	FUN_80027e8c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80027e8c.c:10: warning: implicit declaration of function `FUN_800438f0'
+8002ddf4	52	FUN_8002ddf4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8002ddf4.c:6: warning: implicit declaration of function `FUN_8002df94'
+8004aef8	52	FUN_8004aef8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004aef8.c:5: request for member `unk14' in something not a structure or union
+8004d808	52	FUN_8004d808	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004d808.c:2: parse error before `?'
+800545c8	52	FUN_800545c8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800545c8.c:5: `arg3' undeclared (first use this function)
+800550a4	52	FUN_800550a4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800550a4.c:9: invalid type argument of `unary *'
+800156b4	56	FUN_800156b4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800156b4.c:11: `saved_reg_gp' undeclared (first use this function)
+80023708	56	FUN_80023708	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80023708.c:10: warning: implicit declaration of function `FUN_8001f264'
+80033880	56	FUN_80033880	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80033880.c:9: `D_800710C4' undeclared (first use this function)
+80033924	56	FUN_80033924	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80033924.c:5: for each function it appears in.)
+8003395c	56	FUN_8003395c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8003395c.c:5: for each function it appears in.)
+800528ec	56	FUN_800528ec	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800528ec.c:6: for each function it appears in.)
+80054d50	56	FUN_80054d50	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80054d50.c:11: warning: implicit declaration of function `_SsInit'
+8005506c	56	FUN_8005506c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005506c.c:9: invalid type argument of `unary *'
+8005a234	56	FUN_8005a234	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005a234.c:4: warning: control reaches end of non-void function
+8005ac70	56	FUN_8005ac70	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005ac70.c:11: warning: implicit declaration of function `FUN_80055608'
+80013628	60	FUN_80013628	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80013628.c:5: for each function it appears in.)
+80018d1c	60	FUN_80018d1c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80018d1c.c:5: warning: implicit declaration of function `FUN_80018440'
+80018de8	60	FUN_80018de8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80018de8.c:5: warning: implicit declaration of function `FUN_8001889c'
+80056c28	60	FUN_80056c28	si	DISTINTO	bytes distintos, ver build/verificar/FUN_80056c28.*
+80056c64	60	FUN_80056c64	si	DISTINTO	bytes distintos, ver build/verificar/FUN_80056c64.*
+80013204	64	FUN_80013204	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80013204.c:8: warning: implicit declaration of function `FUN_800131b0'
+8001885c	64	FUN_8001885c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8001885c.c:5: warning: implicit declaration of function `FUN_80018440'
+80018f60	64	FUN_80018f60	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80018f60.c:5: `arg1' undeclared (first use this function)
+80028958	64	FUN_80028958	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80028958.c:7: warning: implicit declaration of function `FUN_800285ec'
+80044720	64	FUN_80044720	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80044720.c:8: request for member `unk12' in something not a structure or union
+80044a60	64	FUN_80044a60	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80044a60.c:4: warning: control reaches end of non-void function
+8004590c	64	FUN_8004590c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004590c.c:4: warning: control reaches end of non-void function
+800461ac	64	FUN_800461ac	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800461ac.c:9: warning: implicit declaration of function `FUN_800557f8'
+8004a034	64	FUN_8004a034	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004a034.c:9: warning: implicit declaration of function `FUN_800132c8'
+8004c0e0	64	FUN_8004c0e0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004c0e0.c:7: request for member `unk8' in something not a structure or union
+80015fc8	68	FUN_80015fc8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80015fc8.c:7: warning: implicit declaration of function `FUN_800285ec'
+80023e8c	68	FUN_80023e8c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80023e8c.c:8: warning: implicit declaration of function `FUN_8001dd40'
+80023ed0	68	FUN_80023ed0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80023ed0.c:8: warning: implicit declaration of function `FUN_8001e630'
+800284e0	68	FUN_800284e0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800284e0.c:11: warning: implicit declaration of function `FUN_80028524'
+8002d5d8	68	FUN_8002d5d8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8002d5d8.c:6: warning: `temp_a1' might be used uninitialized in this function
+8002de28	68	FUN_8002de28	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8002de28.c:9: `saved_reg_gp' undeclared (first use this function)
+80046100	68	FUN_80046100	si	DISTINTO	bytes distintos, ver build/verificar/FUN_80046100.*
+80048084	68	FUN_80048084	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80048084.c:8: warning: implicit declaration of function `FUN_800466e0'
+8004e2e0	68	FUN_8004e2e0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004e2e0.c:7: warning: implicit declaration of function `close'
+8005b4b8	68	FUN_8005b4b8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005b4b8.c:13: invalid type argument of `unary *'
+80018d58	72	FUN_80018d58	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80018d58.c:15: warning: implicit declaration of function `FUN_80018d1c'
+80018da0	72	FUN_80018da0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80018da0.c:18: warning: implicit declaration of function `FUN_8001885c'
+800416e8	72	FUN_800416e8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800416e8.c:8: warning: `temp_a3' might be used uninitialized in this function
+80045e14	72	FUN_80045e14	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80045e14.c:16: warning: control reaches end of non-void function
+8004cfd0	72	FUN_8004cfd0	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_8004cfd0.c:(.text+0x38): undefined reference to `D_80068634'
+80052924	72	FUN_80052924	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80052924.c:6: warning: implicit declaration of function `FUN_8005a92c'
+8005296c	72	FUN_8005296c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005296c.c:6: `arg2' undeclared (first use this function)
+80023e40	76	FUN_80023e40	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80023e40.c:8: warning: implicit declaration of function `FUN_80019450'
+80035200	76	FUN_80035200	si	DISTINTO	bytes distintos, ver build/verificar/FUN_80035200.*
+8003c2f4	76	FUN_8003c2f4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8003c2f4.c:13: request for member `unkA' in something not a structure or union
+80045848	80	FUN_80045848	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80045848.c:5: warning: `temp_a0' might be used uninitialized in this function
+80045f50	80	FUN_80045f50	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80045f50.c:14: warning: implicit declaration of function `FUN_80050e1c'
+800131b0	84	FUN_800131b0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800131b0.c:9: request for member `unk2' in something not a structure or union
+80030428	84	FUN_80030428	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80030428.c:15: warning: implicit declaration of function `FUN_80030214'
+8004f2b8	84	FUN_8004f2b8	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8004f2b8.*
+80013854	88	FUN_80013854	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80013854.c:19: warning: implicit declaration of function `FUN_8004b718'
+80014ab8	88	FUN_80014ab8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80014ab8.c:17: warning: implicit declaration of function `SetTransMatrix'
+80041634	88	FUN_80041634	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80041634.c:19: warning: control reaches end of non-void function
+80045fa0	88	FUN_80045fa0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80045fa0.c:15: warning: implicit declaration of function `FUN_80050e30'
+8001332c	92	FUN_8001332c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8001332c.c:5: warning: `temp_a0' might be used uninitialized in this function
+80013388	92	FUN_80013388	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80013388.c:5: warning: `temp_a0' might be used uninitialized in this function
+800254f4	92	FUN_800254f4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800254f4.c:6: for each function it appears in.)
+8004168c	92	FUN_8004168c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004168c.c:11: warning: `temp_a3' might be used uninitialized in this function
+8004b624	92	FUN_8004b624	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004b624.c:7: warning: `temp_s0' might be used uninitialized in this function
+8004f3b8	92	FUN_8004f3b8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004f3b8.c:17: request for member `unk3' in something not a structure or union
+8005b648	92	FUN_8005b648	si	DISTINTO	bytes distintos, ver build/verificar/FUN_8005b648.*
+8004b92c	96	FUN_8004b92c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004b92c.c:8: `arg1' undeclared (first use this function)
+80013264	100	FUN_80013264	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80013264.c:5: warning: `temp_a0' might be used uninitialized in this function
+800132c8	100	FUN_800132c8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800132c8.c:5: warning: `temp_a0' might be used uninitialized in this function
+8003ade8	100	FUN_8003ade8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8003ade8.c:19: request for member `unk18' in something not a structure or union
+800415d0	100	FUN_800415d0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800415d0.c:11: warning: `temp_a3' might be used uninitialized in this function
+80044760	100	FUN_80044760	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80044760.c:11: warning: implicit declaration of function `SpuSetVoicePitch'
+80045ff8	100	FUN_80045ff8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80045ff8.c:8: warning: `temp_s0' might be used uninitialized in this function
+8005ee1c	100	FUN_8005ee1c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005ee1c.c:11: request for member `unk5A' in something not a structure or union
+80046144	104	FUN_80046144	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80046144.c:26: warning: implicit declaration of function `FUN_800511ec'
+8004b718	104	FUN_8004b718	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004b718.c:11: request for member `unk3C' in something not a structure or union
+8004dae0	104	FUN_8004dae0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004dae0.c:17: `D_8006F4A4' undeclared (first use this function)
+8004de48	104	FUN_8004de48	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004de48.c:17: `D_8006F4A4' undeclared (first use this function)
+800544d0	104	FUN_800544d0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800544d0.c:14: warning: implicit declaration of function `FUN_8005e8b0'
+8005a7e0	104	FUN_8005a7e0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005a7e0.c:15: `func_8005A864' undeclared (first use this function)
+80015344	108	FUN_80015344	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80015344.c:7: warning: control reaches end of non-void function
+800301a8	108	FUN_800301a8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800301a8.c:19: `D_80070FFC' undeclared (first use this function)
+800338b8	108	FUN_800338b8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800338b8.c:6: for each function it appears in.)
+8003dc20	108	FUN_8003dc20	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8003dc20.c:8: `arg2' undeclared (first use this function)
+80041478	108	FUN_80041478	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80041478.c:8: `arg2' undeclared (first use this function)
+80045cc4	108	FUN_80045cc4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80045cc4.c:7: warning: `temp_s0' might be used uninitialized in this function
+8005ac04	108	FUN_8005ac04	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005ac04.c:24: warning: implicit declaration of function `FUN_80055608'
+8001497c	112	FUN_8001497c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8001497c.c:13: `D_800748B8' undeclared (first use this function)
+80014cbc	112	FUN_80014cbc	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80014cbc.c:18: warning: implicit declaration of function `SetTransMatrix'
+80023f14	112	FUN_80023f14	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80023f14.c:3: warning: `temp_v1' might be used uninitialized in this function
+80041560	112	FUN_80041560	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80041560.c:19: warning: control reaches end of non-void function
+8004ba38	112	FUN_8004ba38	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004ba38.c:11: request for member `unk18' in something not a structure or union
+8004da70	112	FUN_8004da70	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004da70.c:21: `func_8004F30C' undeclared (first use this function)
+8004f4c4	112	FUN_8004f4c4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004f4c4.c:19: warning: implicit declaration of function `temp_t0'
+800612cc	112	FUN_800612cc	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800612cc.c:13: invalid type argument of `->'
+800152d0	116	FUN_800152d0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800152d0.c:6: warning: control reaches end of non-void function
+80044978	116	FUN_80044978	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80044978.c:8: warning: `temp_a3' might be used uninitialized in this function
+800449ec	116	FUN_800449ec	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800449ec.c:13: for each function it appears in.)
+80045898	116	FUN_80045898	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80045898.c:13: for each function it appears in.)
+800127a8	120	FUN_800127a8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800127a8.c:9: warning: `temp_a2' might be used uninitialized in this function
+800293e0	120	FUN_800293e0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800293e0.c:16: warning: implicit declaration of function `FUN_80028524'
+80038dd8	120	FUN_80038dd8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80038dd8.c:13: `sp38' undeclared (first use this function)
+8004449c	120	FUN_8004449c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004449c.c:9: for each function it appears in.)
+80016ce4	124	FUN_80016ce4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80016ce4.c:23: warning: implicit declaration of function `FUN_8004e2e0'
+800192cc	124	FUN_800192cc	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800192cc.c:9: warning: `temp_t1' might be used uninitialized in this function
+800414e4	124	FUN_800414e4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800414e4.c:10: warning: `temp_a2' might be used uninitialized in this function
+8004abf8	124	FUN_8004abf8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004abf8.c:10: warning: `var_v1' might be used uninitialized in this function
+800139c4	128	FUN_800139c4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800139c4.c:27: warning: implicit declaration of function `FUN_8004b718'
+80044874	128	FUN_80044874	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80044874.c:5: warning: `temp_v0' might be used uninitialized in this function
+8004a994	128	FUN_8004a994	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004a994.c:3: warning: `temp_a1' might be used uninitialized in this function
+8004c060	128	FUN_8004c060	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004c060.c:8: request for member `unk6' in something not a structure or union
+8004c6f4	128	FUN_8004c6f4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004c6f4.c:21: request for member `unk6' in something not a structure or union
+80051394	128	FUN_80051394	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80051394.c:5: warning: `temp_v1' might be used uninitialized in this function
+800448f4	132	FUN_800448f4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800448f4.c:16: warning: implicit declaration of function `FUN_80055608'
+80059f40	132	FUN_80059f40	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80059f40.c:7: warning: `temp_v1' might be used uninitialized in this function
+8005b434	132	FUN_8005b434	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005b434.c:15: warning: implicit declaration of function `FUN_8005af38'
+80044040	136	FUN_80044040	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80044040.c:10: warning: `temp_a3' might be used uninitialized in this function
+80048f00	136	FUN_80048f00	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80048f00.c:14: request for member `unk6C' in something not a structure or union
+8005535c	136	FUN_8005535c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005535c.c:8: warning: `temp_v0' might be used uninitialized in this function
+800589e0	136	FUN_800589e0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800589e0.c:13: request for member `unk3' in something not a structure or union
+80015954	140	FUN_80015954	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80015954.c:4: warning: control reaches end of non-void function
+80029dd0	140	FUN_80029dd0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80029dd0.c:24: `saved_reg_gp' undeclared (first use this function)
+8003011c	140	FUN_8003011c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8003011c.c:23: `D_80070FFC' undeclared (first use this function)
+8005fa80	140	FUN_8005fa80	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8005fa80.c:29: request for member `unk4' in something not a structure or union
+80044b40	144	FUN_80044b40	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80044b40.c:7: warning: `temp_a2' might be used uninitialized in this function
+8004b89c	144	FUN_8004b89c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004b89c.c:8: request for member `unkC' in something not a structure or union
+800501e8	144	FUN_800501e8	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800501e8.c:22: request for member `unkA' in something not a structure or union
+80054538	144	FUN_80054538	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80054538.c:14: warning: implicit declaration of function `FUN_8005e8b0'
+80028998	148	FUN_80028998	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80028998.c:5: warning: `temp_v0' might be used uninitialized in this function
+80029d3c	148	FUN_80029d3c	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80029d3c.c:7: warning: `var_v1' might be used uninitialized in this function
+80033388	148	FUN_80033388	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80033388.c:34: request for member `unk118' in something not a structure or union
+8003be80	148	FUN_8003be80	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8003be80.c:8: warning: `temp_v0' might be used uninitialized in this function
+80044aa0	148	FUN_80044aa0	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_80044aa0.c:15: for each function it appears in.)
+800457b4	148	FUN_800457b4	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_800457b4.c:26: warning: implicit declaration of function `SsStart'
+8004b680	152	FUN_8004b680	si	NO_COMPILA	NO_COMPILA (cc1): src/croc2exe/FUN_8004b680.c:21: request for member `unk10' in something not a structure or union
+8004c5a8	152	FUN_8004c5a8	si	NO_COMPILA	NO_COMPILA (ld): mipsel-linux-gnu-ld: src/croc2exe/FUN_8004c5a8.c:(.text+0x18): undefined reference to `D_80068524'
 8004c640	152	FUN_8004c640	si	SIN_EMPEZAR	
 8005a92c	152	FUN_8005a92c	si	SIN_EMPEZAR	
 80012d88	156	FUN_80012d88	si	SIN_EMPEZAR	
