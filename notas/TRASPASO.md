@@ -279,29 +279,81 @@ link completo (`make all` con todo el arbol de `.o`, no solo uno) o, mas simple,
 `decomp\include\croc2.h` con las globales reales a medida que se reconocen y enlazando de a
 poco. Quedo anotado, no resuelto.
 
+## Se arreglo el enlazado por funcion (2026-09-22, de raiz)
+
+La pasada anterior se habia trabado 600+ segundos en `FUN_800131a8` (un `j` a si misma) por
+enlazar el `.o` de prueba en una direccion arbitraria (`0x90000000`); intento arreglarlo
+restando un "relleno" de hasta 16 bytes asumiendo que `ld` fuerza esa alineacion. **Esa
+suposicion era falsa y ademas rompia funciones chicas**: se comprobo a mano (link directo con
+`ld` a una direccion NO multiplo de 16, ver commit) que el linker coloca `.text` exactamente
+donde se le pide, sin relleno, mientras la direccion sea multiplo de 4 (todo el codigo MIPS lo
+es). El "relleno" que se restaba en realidad cortaba bytes REALES del principio de cualquier
+funcion de menos de 16 bytes (por eso `FUN_8004486c`, de 8 bytes, salia con "nuestro" vacio).
+
+`verificar.sh`/`verificar.ld` corregidos: enlazan siempre en la direccion exacta de
+`symbols.croc2exe.txt`, sin redondeos. `Makefile`: el target `verificar` ahora solo llama a
+`verificar.sh` (el viejo objdump a ciegas se quito, ya no hacia falta). Probado de nuevo con
+timeout de seguridad: `FUN_800131a8` ya NO se cuelga (antes se trababa sin limite).
+
+## Primera pasada real de verificacion (2026-09-22): 4 IGUAL, 4 DISTINTO, 9 NO_COMPILA
+
+Con el enlazado ya arreglado, se paso por las ~16 funciones mas chicas (8 a 20 bytes) de
+`progreso.tsv`. Conteo real dejado en el archivo (columna `nota` nueva, explica el motivo de
+cada una que no cerro):
+
+- **IGUAL (4)**: `FUN_80012820`, `FUN_80023740`, `FUN_8003c340`, `FUN_8004a090`.
+- **DISTINTO, dos causas nuevas y reales, no arregladas todavia**:
+  - `FUN_800131a8`, `FUN_8004486c`: cc1-27 mete un `nop` de mas al principio de un cuerpo
+    trivial (funcion vacia o un `goto` a si misma) que el original no tiene. Probado con
+    `-O0/-O1/-O2` y con `-fdelayed-branch`, sin cambio — parece limitacion real del compilador
+    en cuerpos degenerados, no algo que el C pueda evitar.
+  - `FUN_80054da0`, `FUN_8005f7b0`: cc1-27 **no mueve el store al hueco de retardo del `jr`**
+    (deja `sh; j; nop` en vez de `j; sh` con el store en el delay slot, que es lo que trae el
+    original). Mismos bytes, orden distinto. Probado `-O2`, `-fschedule-insns`,
+    `-fno-schedule-insns`: ningun flag lo cambio. Es un patron que probablemente se repite en
+    muchas mas funciones (cualquier funcion que termine en un store seguido de return);
+    conviene investigarlo a fondo antes de seguir con funciones parecidas, capaz revisando
+    exactamente que flags/opciones usa `Xeeynamo/croc` para este mismo caso.
+- **NO_COMPILA (9), cuatro motivos distintos, todos anotados en `progreso.tsv` columna `nota`**:
+  - **`saved_reg_gp`** (`FUN_80027c94`, `FUN_80044b34`, `FUN_80045978`, `FUN_800463a8`): m2c no
+    conoce el simbolo de datos en ese offset de `$gp` y pone un placeholder que no compila.
+    Se resuelve con el mapa de datos real (los 383 `undefined_syms_auto`), no antes.
+  - **Tabla de saltos** (`FUN_80056550`, `FUN_80057a98`): un `jr` con jump table que m2c no
+    puede resolver sin mas contexto. Trabajo manual, no automatizable con lo que hay hoy.
+  - **Struct real que falta** (`FUN_80059f34`): m2c hace `arg0->campo` sobre un `void*` (los
+    offsets 0x28/0x34 sugieren una struct de por lo menos 0x38 bytes, sin nombre todavia).
+  - **`SetSp` — cambia `$sp` en el hueco de retardo** (`FUN_80053ee0`): la funcion original
+    literalmente cambia el stack pointer como efecto secundario del `jr`. Se intento con
+    `register void* __asm__("$v0")` y fallo (`cc1-27` no acepta ese nombre de registro en esta
+    version); necesitaria una funcion "naked" (sin prologo/epilogo) que este cc1 no parece
+    soportar. Revisar como lo resuelve `Xeeynamo/croc` para sus propias funciones de cambio de
+    pila/hilo antes de insistir aqui.
+- Se agrego `#include "common.h"` a los borradores de m2c (faltaban los tipos `s32/u32/s16/...`,
+  ninguno viene de PSY-Q) y esos typedefs se dejaron en `decomp\include\croc2.h`.
+
+Scripts nuevos, publicados: `generar_borrador.sh`/`generar_lote.sh` (corren m2c y agregan el
+include), `verificar.sh` (la verificacion real, corregida), `verificar_lote.sh`.
+
 ## Siguiente, en orden
 
-1. Seguir con `FUNC=<nombre> make verificar` funcion por funcion, empezando por las que sean
-   hoja pura (sin acceso a `$gp`) — son las que se pueden confirmar de una sin armar el link
-   completo. Filtrar `progreso.tsv` por funciones que no tengan `$gp` en su `.s`.
-2. Armar el link completo (`make all` de verdad, no el stub) para poder verificar las que si
-   tocan globales — necesita terminar de separar rodata/data/bss del yml de splat primero.
-3. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`).
-4. Resolver los 225 `undefined_funcs_auto` y 383 `undefined_syms_auto` a medida que se
-   decompilen funciones reales, no antes.
-5. Seguir sacando tipos reales (camara, objeto, jugador) en `decomp\include\croc2.h` a medida
-   que se pasen funciones a mano — hoy solo hay una pista (`Share_Camera`), sin campos. El
-   `int *a0` de `FUN_80012820` con offset 2 (0x8 bytes) es candidato a campo de alguna struct,
-   sin nombre todavia.
+1. Investigar el patron "store sin mover al delay slot" (`FUN_80054da0`, `FUN_8005f7b0`) — si se
+   repite en muchas funciones (probable), vale la pena resolverlo antes de seguir en vez de
+   toparlo funcion por funcion.
+2. Seguir con `FUNC=<nombre> make verificar` por el resto de `progreso.tsv` (mas facil primero),
+   saltando las que ya se sabe que necesitan el mapa de datos (`saved_reg_gp`) hasta que ese
+   trabajo este mas avanzado.
+3. Resolver el mapa de datos: los 383 `undefined_syms_auto` — probablemente destrabe la mayoria
+   de las `NO_COMPILA` por `saved_reg_gp`, que es previsible que sea la categoria mas comun a
+   medida que se avanza (casi cualquier funcion no trivial toca alguna global).
+4. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`).
+5. Seguir sacando tipos reales (camara, objeto, jugador, la struct de `FUN_80059f34`) en
+   `decomp\include\croc2.h` a medida que se pasen funciones a mano.
 
 ## Para retomar
 
 ```
-wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && make extract"
-```
-
-Para probar una funcion hoja (sin `$gp`) contra el compilador ya puesto en `decomp\bin\cc1-27`:
-
-```
 wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && FUNC=NOMBRE make verificar"
 ```
+
+Para generar un borrador nuevo antes de verificar: `bash generar_borrador.sh NOMBRE` (deja
+`src/croc2exe/NOMBRE.c`, hay que revisarlo/corregirlo a mano, casi nunca sale bien de una).

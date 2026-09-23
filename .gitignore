@@ -27,6 +27,8 @@ decomp/src/
 decomp/SLUS_006.34
 decomp/CROC2.EXE
 decomp/*.ld
+# menos verificar.ld: es plantilla propia generica, no trae datos del juego
+!decomp/verificar.ld
 decomp/*.d
 decomp/undefined_*.txt
 # compilador PSY-Q (propietario de Sony): se usa local, nunca se publica

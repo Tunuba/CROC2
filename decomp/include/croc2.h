@@ -6,6 +6,19 @@
 #ifndef CROC2_H
 #define CROC2_H
 
+// Convencion estandar de la comunidad de decomp (no es de PSY-Q, PSY-Q no trae esto):
+// tipos de ancho fijo cortos para que el C generado por m2c compile tal cual.
+typedef signed char s8;
+typedef unsigned char u8;
+typedef short s16;
+typedef unsigned short u16;
+typedef int s32;
+typedef unsigned int u32;
+typedef long long s64;
+typedef unsigned long long u64;
+typedef float f32;
+typedef double f64;
+
 // CROC2.EXE es un build de desarrollo, no uno recortado para venta: trae menu de trucos
 // ("Cheat_Menu_Active", "Magazine_Cheat_Menu_Active" -- el mismo truco que documenta
 // hdc0/Croc-2-mods/cheat_engine_scripts/EnableMagazineCheat.lua), selector de nivel

@@ -35,18 +35,9 @@ check-compiler:
 decompile:
 	$(M2C) --target mipsel-gcc-c asm/croc2exe/nonmatchings/800/$(FUNC).s
 
-# FUNC=nombre_funcion make verificar   (compila src/croc2exe/FUNC.c suelto y compara contra
-# el original con objdump; sirve para funciones hoja SIN globales/gp, ej. getters simples.
-# Una funcion que toca variables globales (acceso $gp) necesita el link completo, no esto solo.)
-build/verificar/%.o: src/croc2exe/%.c check-compiler
-	@mkdir -p build/verificar
-	$(CPP) $(CPP_FLAGS) $< 2>/dev/null > build/verificar/$*.i
-	$(CC) $(CC_FLAGS) build/verificar/$*.i -o build/verificar/$*.s
-	$(MASPSX) build/verificar/$*.s > build/verificar/$*.fixed.s
-	$(AS) $(AS_FLAGS) -o $@ build/verificar/$*.fixed.s
-
-verificar: build/verificar/$(FUNC).o
-	@echo "--- nuestro ---"
-	@$(CROSS)objdump -d build/verificar/$(FUNC).o | tail -n +8
-	@echo "--- original (asm/croc2exe/nonmatchings/800/$(FUNC).s) ---"
-	@cat asm/croc2exe/nonmatchings/800/$(FUNC).s
+# FUNC=nombre_funcion make verificar   (enlaza src/croc2exe/FUNC.c en SU direccion real y
+# compara los bytes contra el original byte a byte; ver verificar.sh para el detalle. Una
+# funcion que toca una variable global sin simbolo conocido todavia no puede pasar esto,
+# ver notas/TRASPASO.md seccion de bloqueos.)
+verificar: check-compiler
+	@bash verificar.sh $(FUNC)
