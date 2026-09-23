@@ -240,22 +240,59 @@ gitignorado junto con el resto de `decomp/`); hasta entonces `make extract` func
 `make all`/`make decompile` no compilan nada, solo dejan el `.s` listo para pasar por m2c y leer
 a mano.
 
+## El compilador, resuelto (2026-09-22, con autorizacion explicita de Meme)
+
+Meme autorizo explicitamente cruzar la unica linea que quedaba ("empieza tu bro, tomate las
+mejores decisiones, no pares") despues de que yo señalara exactamente donde estaba: el binario
+`cc1-27` esta committeado directamente en el historial de `Xeeynamo/croc` (commit `f30ff1e`,
+`bin/cc1-27`, GNU C 2.7.2.SN32.3.7, 4.4 MB, ELF de Linux x86-64 — corre nativo en WSL, no hace
+falta dosbox). Se saco de ahi con `git show f30ff1e:bin/cc1-27` y quedo en
+`decomp\bin\cc1-27` (y los headers `include/psyq/*.h` del mismo repo en `decomp\include\psyq\`).
+
+**Regla que sigue firme sin excepcion**: ese binario y esos headers de Sony **nunca se
+commitean** a `Tunuba/CROC2`. `.gitignore` ya cubre `decomp/bin/` y `decomp/include/psyq/`;
+comprobado con `git status --ignored` antes de subir nada.
+
+## Primera funcion IGUAL, confirmada byte a byte (2026-09-22)
+
+`FUN_80012820` (`int FUN_80012820(int *a0) { return a0[2]; }`, 12 bytes) compila y ensambla
+**identico** al original: `lw $v0,8($a0); jr $ra; nop`. Verificado con
+`FUNC=FUN_80012820 make verificar` (nuevo target en el Makefile: compila el .c suelto con
+cpp|cc1-27|maspsx|mipsel-linux-gnu-as y muestra el objdump al lado del original). Marcado
+`IGUAL` en `progreso.tsv`.
+
+**Hallazgo importante sobre los flags**: una funcion `void f(void) {}` (cuerpo vacio) SIEMPRE
+sale con marco de pila completo (`subu $sp,$sp,8` etc.) sin importar `-O0/-O1/-O2` ni
+`-fomit-frame-pointer` — este cc1 no lo omite nunca para cuerpo vacio. Pero una funcion **con
+una instruccion real** (como el `return a0[2]`) sale sin marco si es hoja. Por eso
+`FUN_800131a8` (`j` a si misma, cuerpo "vacio" en la practica) y los tres `jr $ra; nop`
+(`FUN_80023740`, `FUN_8003c340`, `FUN_8004486c`, `FUN_8004a090`) **no cerraron** con un `void
+f(void){}` directo — siguen `SIN_EMPEZAR`, no se fuerzo un C falso solo para que "compile algo".
+Hace falta encontrar que C real generan esos cuatro sin caer en el caso degenerado (o aceptar
+que son casos limite y dejarlos para el final).
+
+**Las funciones que leen/escriben variables globales** (`$gp`-relativas, ej. `FUN_80027c94`,
+`FUN_80044b34`, `FUN_80045978`, `FUN_800463a8`) **no se pueden verificar compilando el .c
+suelto**: el offset `$gp` real depende de donde el LINKER completo coloque cada global, que
+`FUNC=... make verificar` no arma (solo compila un archivo aislado). Para esas hace falta el
+link completo (`make all` con todo el arbol de `.o`, no solo uno) o, mas simple, ir armando
+`decomp\include\croc2.h` con las globales reales a medida que se reconocen y enlazando de a
+poco. Quedo anotado, no resuelto.
+
 ## Siguiente, en orden
 
-1. Si Meme consigue el compilador PSY-Q: ponerlo en `decomp\bin\cc1-27`, correr `make all`
-   dentro de WSL contra `CROC2.EXE` y verificar que compila igual que hace Croc 1.
-2. Sin compilador: se puede seguir igual con `FUNC=<nombre> make decompile` (usa m2c, ya
-   instalado) para tener un primer borrador en C de cada funcion y anotarla a mano en
-   `progreso.tsv`, aunque no se pueda confirmar el match byte a byte todavia. Empezar por las
-   primeras filas de `progreso.tsv` (ya ordenadas de mas facil a mas dificil): `FUN_800131a8`,
-   `FUN_80023740`, `FUN_8003c340`, `FUN_8004486c`, `FUN_8004a090`.
-3. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`);
-   comparar con como lo hizo Croc 1 en su yml si ayuda.
-4. Resolver los 225 `undefined_funcs_auto` y 383 `undefined_syms_auto` que dejo splat (llamadas
-   y datos que el codigo referencia pero Ghidra no habia nombrado) a medida que se decompilen
-   funciones reales, no antes.
+1. Seguir con `FUNC=<nombre> make verificar` funcion por funcion, empezando por las que sean
+   hoja pura (sin acceso a `$gp`) — son las que se pueden confirmar de una sin armar el link
+   completo. Filtrar `progreso.tsv` por funciones que no tengan `$gp` en su `.s`.
+2. Armar el link completo (`make all` de verdad, no el stub) para poder verificar las que si
+   tocan globales — necesita terminar de separar rodata/data/bss del yml de splat primero.
+3. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`).
+4. Resolver los 225 `undefined_funcs_auto` y 383 `undefined_syms_auto` a medida que se
+   decompilen funciones reales, no antes.
 5. Seguir sacando tipos reales (camara, objeto, jugador) en `decomp\include\croc2.h` a medida
-   que se pasen funciones a mano — hoy solo hay una pista (`Share_Camera`), sin campos.
+   que se pasen funciones a mano — hoy solo hay una pista (`Share_Camera`), sin campos. El
+   `int *a0` de `FUN_80012820` con offset 2 (0x8 bytes) es candidato a campo de alguna struct,
+   sin nombre todavia.
 
 ## Para retomar
 
@@ -263,9 +300,8 @@ a mano.
 wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && make extract"
 ```
 
-(`extract` ya apunta a `CROC2.EXE`; `make extract-loader` rehace la version vieja del cargador
-si hace falta). Y con el compilador ya puesto en `decomp\bin\cc1-27`:
+Para probar una funcion hoja (sin `$gp`) contra el compilador ya puesto en `decomp\bin\cc1-27`:
 
 ```
-wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && make all"
+wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && FUNC=NOMBRE make verificar"
 ```

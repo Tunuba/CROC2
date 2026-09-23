@@ -10,7 +10,7 @@ CC          := ./bin/cc1-27
 CPP         := $(CROSS)cpp
 AS_FLAGS    += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1
 CC_FLAGS    += -mips1 -mcpu=3000 -quiet -G0 -Wall -fno-builtin -mno-abicalls -funsigned-char -O1
-CPP_FLAGS   += -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
+CPP_FLAGS   += -Iinclude -Iinclude/psyq -undef -Wall -lang-c -fno-builtin -gstabs
 CPP_FLAGS   += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C
 
 HERRAMIENTAS := $(HOME)/decomp-herramientas
@@ -18,7 +18,7 @@ MASPSX       := $(PYTHON) $(HERRAMIENTAS)/maspsx/maspsx.py --expand-div --aspsx-
 M2C          := $(PYTHON) $(HERRAMIENTAS)/m2c/m2c.py -P 4
 ASMDIFFER    := $(PYTHON) $(HERRAMIENTAS)/asm-differ/diff.py
 
-.PHONY: extract extract-loader all decompile check-compiler
+.PHONY: extract extract-loader decompile check-compiler verificar
 
 extract:
 	$(PYTHON) -m splat split config/splat.croc2exe.yml
@@ -31,9 +31,22 @@ extract-loader:
 check-compiler:
 	@test -x $(CC) || (echo "Falta $(CC): el compilador PSY-Q no se descarga solo, ver notas/TRASPASO.md seccion 'Bloqueo, el compilador'."; exit 1)
 
-all: check-compiler
-	@echo "Compilacion real pendiente de $(CC). Ver notas/TRASPASO.md."
-
-# FUNC=nombre_funcion make decompile
+# FUNC=nombre_funcion make decompile   (borrador de m2c para arrancar, no confiar sin corregir)
 decompile:
 	$(M2C) --target mipsel-gcc-c asm/croc2exe/nonmatchings/800/$(FUNC).s
+
+# FUNC=nombre_funcion make verificar   (compila src/croc2exe/FUNC.c suelto y compara contra
+# el original con objdump; sirve para funciones hoja SIN globales/gp, ej. getters simples.
+# Una funcion que toca variables globales (acceso $gp) necesita el link completo, no esto solo.)
+build/verificar/%.o: src/croc2exe/%.c check-compiler
+	@mkdir -p build/verificar
+	$(CPP) $(CPP_FLAGS) $< 2>/dev/null > build/verificar/$*.i
+	$(CC) $(CC_FLAGS) build/verificar/$*.i -o build/verificar/$*.s
+	$(MASPSX) build/verificar/$*.s > build/verificar/$*.fixed.s
+	$(AS) $(AS_FLAGS) -o $@ build/verificar/$*.fixed.s
+
+verificar: build/verificar/$(FUNC).o
+	@echo "--- nuestro ---"
+	@$(CROSS)objdump -d build/verificar/$(FUNC).o | tail -n +8
+	@echo "--- original (asm/croc2exe/nonmatchings/800/$(FUNC).s) ---"
+	@cat asm/croc2exe/nonmatchings/800/$(FUNC).s
