@@ -334,20 +334,47 @@ cada una que no cerro):
 Scripts nuevos, publicados: `generar_borrador.sh`/`generar_lote.sh` (corren m2c y agregan el
 include), `verificar.sh` (la verificacion real, corregida), `verificar_lote.sh`.
 
+## Primera pasada automatica sobre las 483, completa (2026-09-22)
+
+Se recorrieron **las 483 funciones candidatas, una por una** (`decomp\lote_avanzar.py`, nuevo:
+genera el borrador de m2c si falta y corre `verificar.sh`, guardando el resultado en
+`progreso.tsv` **despues de cada funcion**, no en lotes). Cero `SIN_EMPEZAR` restantes.
+Resultado final, sin fabricar ningun IGUAL:
+
+- **5 IGUAL** (las hojas mas chicas, ya cerradas byte a byte).
+- **23 DISTINTO** (compilan, dan bytes distintos — divergencias reales de scheduling/registro,
+  hay que corregir el C a mano funcion por funcion).
+- **455 NO_COMPILA** — esto es lo esperable en una primera pasada 100% automatica sin correccion
+  humana del borrador de m2c; NO significa 455 bloqueos distintos. Categorizado por causa real
+  (columna `nota` de cada fila):
+
+  | Causa | Cuantas | Que hace falta |
+  |---|---:|---|
+  | m2c genero una variable "podria no estar inicializada" | 155 | bug tipico del borrador crudo; se corrige a mano revisando el flujo, no es un bloqueo de fondo |
+  | Llama a una funcion sin declarar (falta prototipo) | 94 | mecanico: declarar el prototipo en `croc2.h` (muchas ya tienen nombre real de PSY-Q o de otra funcion del juego ya vista) |
+  | Otro / revisar a mano caso por caso | 88 | sin patron unico, incluye tablas de saltos que m2c no resuelve y estructuras de control raras |
+  | Falta un campo de struct (`unkXX`) | 52 | necesita las structs reales (camara/objeto/jugador) que todavia no se conocen con certeza |
+  | Variable global sin nombre (`D_800xxxxx`) | 37 | falta terminar el mapa de datos (los 383 `undefined_syms_auto`) |
+  | m2c no genero el borrador (tabla de saltos u otro) | 17 | revisar el `.s` original a mano, sin ayuda de m2c |
+  | m2c no encontro el `return` | 12 | bug tipico del borrador, se corrige a mano |
+
+**Lectura honesta**: el driver automatico ya dio todo lo que puede dar sin intervencion humana.
+Los dos buckets mas grandes (variable no inicializada, prototipo faltante — **249 de 455, el
+55 %**) son en su mayoria correcciones mecanicas rapidas, no bloqueos de fondo; **decompilar de
+verdad de aqui en adelante es trabajo funcion por funcion, a mano**, como en Sabrina.
+
 ## Siguiente, en orden
 
-1. Investigar el patron "store sin mover al delay slot" (`FUN_80054da0`, `FUN_8005f7b0`) — si se
-   repite en muchas funciones (probable), vale la pena resolverlo antes de seguir en vez de
-   toparlo funcion por funcion.
-2. Seguir con `FUNC=<nombre> make verificar` por el resto de `progreso.tsv` (mas facil primero),
-   saltando las que ya se sabe que necesitan el mapa de datos (`saved_reg_gp`) hasta que ese
-   trabajo este mas avanzado.
-3. Resolver el mapa de datos: los 383 `undefined_syms_auto` — probablemente destrabe la mayoria
-   de las `NO_COMPILA` por `saved_reg_gp`, que es previsible que sea la categoria mas comun a
-   medida que se avanza (casi cualquier funcion no trivial toca alguna global).
-4. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`).
-5. Seguir sacando tipos reales (camara, objeto, jugador, la struct de `FUN_80059f34`) en
-   `decomp\include\croc2.h` a medida que se pasen funciones a mano.
+1. **Lo que mas rinde**: atacar el bucket de "prototipo faltante" (94) declarando en `croc2.h`
+   las funciones ya conocidas — es mecanico y probablemente destraba varias de una.
+2. Revisar a mano las 23 `DISTINTO` (ya compilan, solo falta ajustar el C para que el scheduling
+   salga igual) — son las mas cerca de cerrar.
+3. Terminar el mapa de datos (383 `undefined_syms_auto`) para destrabar las 37 de variable
+   global sin nombre, y de paso varias del bucket "otro".
+4. Ir sacando las structs reales (camara/objeto/jugador) para el bucket de 52 `unkXX`.
+5. Reprocesar con `lote_avanzar.py` despues de cada mejora de fondo (prototipos, mapa de datos,
+   structs) para medir cuantas se destrabaron solas, en vez de ir funcion por funcion a ciegas.
+6. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`).
 
 ## Para retomar
 
@@ -357,3 +384,10 @@ wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-
 
 Para generar un borrador nuevo antes de verificar: `bash generar_borrador.sh NOMBRE` (deja
 `src/croc2exe/NOMBRE.c`, hay que revisarlo/corregirlo a mano, casi nunca sale bien de una).
+
+Para repetir la pasada automatica sobre lo que siga `SIN_EMPEZAR` (por si se agregan mas
+funciones o se reintenta alguna a proposito poniendola de nuevo en `SIN_EMPEZAR`):
+
+```
+wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && python3 lote_avanzar.py 500"
+```
