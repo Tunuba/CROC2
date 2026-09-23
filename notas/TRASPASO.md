@@ -432,3 +432,56 @@ Si esa pasada ya no esta corriendo (`pgrep -af lote_avanzar` vacio en WSL) y que
 `SIN_EMPEZAR`, retomar con el comando de arriba (`lote_avanzar.py 500`). Con los dos bugs
 corregidos, los buckets grandes de la tabla de la seccion anterior (variable no inicializada,
 prototipo faltante) deberian bajar mucho — falta medirlo con la pasada terminada.
+
+## PAUSA, 2026-09-22 ~22:00 — Meme apaga la maquina. ESTADO REAL AL CIERRE
+
+**No quedo nada corriendo** (`pgrep -af lote_avanzar` vacio, confirmado). Todo lo de abajo esta
+committeado y pusheado a `Tunuba/CROC2` main.
+
+**Conteo final de esta sesion, las 483 funciones ya procesadas una vez (0 SIN_EMPEZAR):**
+
+| Estado | Cuantas | % |
+|---|---:|---:|
+| IGUAL | 7 | 1.4 % |
+| DISTINTO | 39 | 8.1 % |
+| NO_COMPILA | 437 | 90.5 % |
+
+El salto de 30 a 437 NO_COMPILA en la ultima tanda **no esta verificado al 100 %** — coincidio
+con dos apagones por falta de RAM (ver abajo) y no alcance a confirmar del todo si son causas
+reales o basura por falta de memoria a mitad de compilar. Revise una muestra de las notas
+(`awk -F'\t' '$(NF-1)=="NO_COMPILA"{print $NF}' progreso.tsv | sort | uniq -c`) y **se ven
+distintas y especificas** (referencias a simbolos de datos distintos como `D_8006E35C`,
+`D_8006D660`, `D_8006D640`, no un solo error repetido), lo que sugiere que SI son analisis reales
+del linker y no ruido — pero **antes de confiar en estos 437, correr `lote_avanzar.py 500` de
+nuevo una vez que la maquina tenga RAM libre** y comparar: si el conteo no cambia mucho, eran
+reales; si cambian en masa, la tanda anterior si se corrompio por falta de memoria.
+
+**Incidente de RAM, dos veces en esta sesion — anotar para la proxima:**
+
+1. Un fork "supervisor" (task `ad9cf9c27048ca1a9`) se estaba despertando solo cada ~20 segundos
+   para leer un numero de `progreso.tsv`, gastando ~360 000 tokens completos por cada despertar
+   (recargaba todo su contexto). Se detuvo con `TaskStop` por ser carisimo para nada — pero eso
+   **tambien mato sin querer el proceso real de WSL** (`lote_avanzar.py`) que corria dentro de la
+   misma sesion, porque no estaba de verdad desprendido (`nohup`/`disown` a medias).
+2. Se relanzo bien (`nohup ... & disown`) y se vigilo con un `until pgrep ...; do sleep 30; done`
+   en segundo plano (gratis, sin agente) — pero el sistema lo mato por presion de memoria real:
+   **solo 1.1 GB libres de 15.7 GB** en Windows, el grueso en `vmmemWSL` (4.7 GB) mas varias
+   sesiones de Claude corriendo en paralelo. Free de WSL confirma: 744 MB libres de 7.6 GB.
+
+**Recomendacion para la proxima sesion**: antes de lanzar otra tanda larga de `lote_avanzar.py`,
+correr `wsl --shutdown` (fuera de WSL, en PowerShell) si no hay nada mas usando Sabrina/Chameleon
+en WSL, para partir con la maquina virtual limpia y no quedarse sin RAM a medio lote. Ver memoria
+`la-maquina-de-meme-se-queda-sin-ram` y `la-laptop-se-duerme-y-corta-los-agentes`.
+
+## Siguiente, actualizado al cierre
+
+1. **Primero, antes de nada**: `wsl --shutdown`, reabrir WSL, y correr `lote_avanzar.py 500` de
+   nuevo para confirmar si los 437 NO_COMPILA son reales o quedaron corruptos por la falta de RAM
+   (ver arriba). Esto decide si se puede confiar en la categorizacion o hay que repetirla.
+2. Con eso confirmado: atacar "prototipo faltante" (mecanico, rinde rapido), revisar las 39
+   DISTINTO a mano, terminar el mapa de datos, sacar structs reales — igual que ya estaba
+   planeado mas arriba.
+3. Comando para ver el conteo en cualquier momento, sin gastar ningun agente:
+   ```
+   awk -F'\t' "NR>1{print \$(NF-1)}" C:\Proyectos\CROC2\decomp\progreso.tsv | sort | uniq -c
+   ```
