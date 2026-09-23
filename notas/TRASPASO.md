@@ -156,13 +156,41 @@ Se importo `extraido\CROC2.EXE` en el mismo proyecto Ghidra (`ghidra\croc2`), mi
 - Primer tipo con evidencia real (no inventado) en `decomp\include\croc2.h`:
   `FUN_80018e24` referencia una tabla via `PTR_s_Share_Camera_80064a40` (puntero a la cadena
   "Share_Camera") — unica pista de camara vista hasta ahora, sin campos confirmados.
-- **Pendiente, no hecho todavia**: el pipeline de splat/progreso.tsv de abajo sigue apuntando a
-  `SLUS_006.34`. Falta rehacerlo (o sumarlo aparte) contra `CROC2.EXE`, que es el que de verdad
-  importa. `SLUS_006.34` vale la pena decompilar igual — es chico (163 KB) y es codigo real del
-  juego (el cargador) — pero no es donde esta el 90%+ del trabajo.
+- ~~Pendiente, no hecho todavia: el pipeline...~~ **Resuelto mas abajo, mismo dia**: el pipeline
+  ya se rehizo apuntando a `CROC2.EXE`. `SLUS_006.34` (el cargador) se deja como esta, no hace
+  falta decompilarlo (es 100% libreria PSY-Q conocida).
 - Comunidad: se busco en decomp.me y en GitHub (`Argonaut-PS1-Reverse`, la org que tiene
   `Stratigise` para Croc 1 y `hp1` para Harry Potter) — **nadie ha tocado el codigo de Croc 2
   todavia**, ni ahi ni en ningun otro lado encontrado. Sigue siendo el candidato limpio.
+
+## El pipeline, rehecho apuntando a CROC2.EXE (2026-09-22, correcto)
+
+Se repitio el mismo trabajo de la seccion de abajo pero contra el ejecutable real:
+
+- `config/splat.croc2exe.yml`: `target_path: extraido\CROC2.EXE`, `vram: 0x80010000` (leido de
+  la cabecera PS-X EXE: `pc0=0x8004f41c`, `t_addr=0x80010000`, `t_size=0x62000` — coincide exacto
+  con el tamano de archivo menos la cabecera de 0x800, 403456 = 0x800 + 0x62000).
+- `config/symbols.croc2exe.txt`: los 972 simbolos de `notas\ghidra\croc2exe\funciones.tsv`
+  (`scripts\generar_symbols.py`, nuevo, reemplaza cualquier script anterior de un solo uso).
+  Un nombre salio duplicado (`_SsSndPlay` en dos direcciones distintas, 44 bytes cada una — el
+  mismo patron de libreria en dos sitios); el script lo desambigua solo con la direccion
+  (`_SsSndPlay_80062368`) en vez de fallar.
+- `make extract` corrio limpio: **1447 archivos .s** en `asm/croc2exe/nonmatchings/800/` (no se
+  publican, `decomp/asm/` en `.gitignore`) y `src/croc2exe/800.c` (tampoco, `decomp/src/`).
+  Splat detecto solo **383 simbolos de datos y 225 funciones sin resolver** referenciados desde
+  el codigo (`config/undefined_syms_auto.croc2exe.txt` / `undefined_funcs_auto.croc2exe.txt`,
+  generados por splat mismo, no a mano) — normal, son punteros a datos que Ghidra no habia
+  nombrado.
+- `decomp\progreso.tsv` reemplazado: ya no son las "209 del cargador", son **las 483 funciones
+  candidatas reales de `CROC2.EXE`**, ordenadas de mas facil a mas dificil (columna
+  `decompila_limpio`, todas en `si`, ninguna dio error de pcode en Ghidra), todas `SIN_EMPEZAR`.
+  El archivo viejo `prioridad_croc2exe.tsv` se elimino, `progreso.tsv` es ahora el unico archivo
+  de seguimiento (evitar tener dos copias de la misma lista que se puedan desincronizar).
+- `Makefile`: `extract` ahora apunta a `croc2exe`; se agrego `extract-loader` para si algun dia
+  hace falta revisar `SLUS_006.34` de nuevo; `decompile` tambien actualizado a la carpeta nueva.
+- Linker scripts: `croc2exe.ld` (nuevo, base `0x80010000`) y el viejo renombrado
+  `slus_006_34.ld` (por si se decompila el cargador mas adelante). Ninguno se publica
+  (`decomp/*.ld` en `.gitignore`, son regenerables).
 
 ## El pipeline de matching, armado (2026-09-22, apuntando a SLUS_006.34 -- ver correccion arriba)
 
@@ -214,18 +242,18 @@ a mano.
 
 ## Siguiente, en orden
 
-1. **Rehacer el pipeline de splat apuntando a `CROC2.EXE`** (`extraido\CROC2.EXE`, carga en
-   `0x80010000`), usando `notas\ghidra\croc2exe\funciones.tsv` para los simbolos — es donde esta
-   el trabajo de verdad (483 funciones, 237 KB). Dejar el de `SLUS_006.34` como esta, sirve
-   igual para el cargador.
-2. Si Meme consigue el compilador PSY-Q: ponerlo en `decomp\bin\cc1-27`, correr `make all`
-   dentro de WSL y verificar que compila igual que hace Croc 1.
-3. Sin compilador: se puede seguir igual con `FUNC=<nombre> make decompile` (usa m2c, ya
+1. Si Meme consigue el compilador PSY-Q: ponerlo en `decomp\bin\cc1-27`, correr `make all`
+   dentro de WSL contra `CROC2.EXE` y verificar que compila igual que hace Croc 1.
+2. Sin compilador: se puede seguir igual con `FUNC=<nombre> make decompile` (usa m2c, ya
    instalado) para tener un primer borrador en C de cada funcion y anotarla a mano en
-   `progreso.tsv`/`prioridad_croc2exe.tsv`, aunque no se pueda confirmar el match byte a byte
-   todavia. Empezar por las mas chicas de `prioridad_croc2exe.tsv`.
-4. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`);
+   `progreso.tsv`, aunque no se pueda confirmar el match byte a byte todavia. Empezar por las
+   primeras filas de `progreso.tsv` (ya ordenadas de mas facil a mas dificil): `FUN_800131a8`,
+   `FUN_80023740`, `FUN_8003c340`, `FUN_8004486c`, `FUN_8004a090`.
+3. Afinar la separacion rodata/data/bss del yml de splat (hoy todo es un solo bloque `code`);
    comparar con como lo hizo Croc 1 en su yml si ayuda.
+4. Resolver los 225 `undefined_funcs_auto` y 383 `undefined_syms_auto` que dejo splat (llamadas
+   y datos que el codigo referencia pero Ghidra no habia nombrado) a medida que se decompilen
+   funciones reales, no antes.
 5. Seguir sacando tipos reales (camara, objeto, jugador) en `decomp\include\croc2.h` a medida
    que se pasen funciones a mano — hoy solo hay una pista (`Share_Camera`), sin campos.
 
@@ -235,7 +263,8 @@ a mano.
 wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && make extract"
 ```
 
-Y con el compilador ya puesto en `decomp\bin\cc1-27`:
+(`extract` ya apunta a `CROC2.EXE`; `make extract-loader` rehace la version vieja del cargador
+si hace falta). Y con el compilador ya puesto en `decomp\bin\cc1-27`:
 
 ```
 wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && make all"

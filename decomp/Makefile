@@ -1,6 +1,7 @@
-# Pipeline de matching decomp para SLUS_006.34 (Croc 2, USA), calcado del de Xeeynamo/croc.
-# Reusa las herramientas ya instaladas en WSL para Sabrina (m2c, maspsx, asm-differ, venv con
-# splat64). Correr siempre dentro de WSL: wsl -d Ubuntu-24.04
+# Pipeline de matching decomp para CROC2.EXE (el juego real; SLUS_006.34 es solo el cargador
+# de 163 KB que lo carga desde el disco y le salta, no hace falta decompilarlo), calcado del de
+# Xeeynamo/croc. Reusa las herramientas ya instaladas en WSL para Sabrina (m2c, maspsx,
+# asm-differ, venv con splat64). Correr siempre dentro de WSL: wsl -d Ubuntu-24.04
 
 PYTHON      := python3
 CROSS       := mipsel-linux-gnu-
@@ -17,9 +18,14 @@ MASPSX       := $(PYTHON) $(HERRAMIENTAS)/maspsx/maspsx.py --expand-div --aspsx-
 M2C          := $(PYTHON) $(HERRAMIENTAS)/m2c/m2c.py -P 4
 ASMDIFFER    := $(PYTHON) $(HERRAMIENTAS)/asm-differ/diff.py
 
-.PHONY: extract all decompile check-compiler
+.PHONY: extract extract-loader all decompile check-compiler
 
 extract:
+	$(PYTHON) -m splat split config/splat.croc2exe.yml
+
+# El cargador (SLUS_006.34) no hace falta decompilarlo, es 100% libreria PSY-Q conocida segun
+# Ghidra; esto queda solo por si algun dia hace falta revisarlo de nuevo.
+extract-loader:
 	$(PYTHON) -m splat split config/splat.slus00634.croc2.yml
 
 check-compiler:
@@ -30,4 +36,4 @@ all: check-compiler
 
 # FUNC=nombre_funcion make decompile
 decompile:
-	$(M2C) --target mipsel-gcc-c asm/croc2/nonmatchings/800/$(FUNC).s
+	$(M2C) --target mipsel-gcc-c asm/croc2exe/nonmatchings/800/$(FUNC).s

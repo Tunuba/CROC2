@@ -1,0 +1,30 @@
+options:
+  platform:     psx
+  basename:     croc2exe
+  base_path:    ..
+  target_path:  ../extraido/CROC2.EXE
+  asm_path:     asm/croc2exe
+  asset_path:   assets/croc2exe
+  src_path:     src/croc2exe
+  compiler:     GCC
+  symbol_addrs_path:    config/symbols.croc2exe.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.croc2exe.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.croc2exe.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  section_order:
+    - ".rodata"
+    - ".text"
+    - ".data"
+    - ".bss"
+segments:
+  - [0x800, header]
+  - name: croc2exe
+    type: code
+    start: 0x000800
+    vram:  0x80010000
+    subalign: 4
+    subsegments:
+      - [0x000800, c] # sin separar rodata/data/bss todavia, ver notas/TRASPASO.md
+  - [0x062800]
