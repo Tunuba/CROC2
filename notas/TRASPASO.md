@@ -391,3 +391,44 @@ funciones o se reintenta alguna a proposito poniendola de nuevo en `SIN_EMPEZAR`
 ```
 wsl -d Ubuntu-24.04 -- bash -lc "cd /mnt/c/Proyectos/CROC2/decomp && . ~/decomp-herramientas/venv/bin/activate && python3 lote_avanzar.py 500"
 ```
+
+## Dos bugs reales del driver, corregidos (2026-09-22, tarde)
+
+La categorizacion de la pasada anterior estaba mal calculada por dos bugs del propio
+`lote_avanzar.py`/`generar_borrador.sh`, no del compilador ni del juego — ya corregidos:
+
+1. **m2c deja `?` como tipo de retorno cuando no lo puede inferir** (en el `extern` de una
+   funcion llamada, y a veces en la funcion misma), y `?` no es valido en C: `cc1` tira
+   `parse error before `?''`. Afectaba a **265 de las 483 funciones**, no eran 265 problemas
+   distintos. `generar_borrador.sh` ahora reemplaza `? ` por `s32 ` justo despues de generar
+   cada borrador (mismo criterio que el resto de tipos sin resolver del proyecto).
+2. El clasificador de errores (`clasificar_no_compila` en `lote_avanzar.py`) tomaba la
+   **ultima linea** de la salida de `cc1`, que casi siempre es ruido (`... In function 'X':` o
+   `for each function it appears in.)`), no el error real. `cc1-27` (gcc 2.7 viejo) no marca
+   errores con `error:` como el gcc moderno; ahora se busca la primera linea con
+   `archivo.c:NUMERO:` que no sea `warning:`, que es donde esta el mensaje real.
+
+**Ojo, incidente al aplicar el arreglo**: se reinicio `progreso.tsv` (455 filas a `SIN_EMPEZAR`)
+mientras el lote anterior (con el driver viejo) seguia corriendo en WSL sin que lo hubiera
+matado antes — los dos procesos escribian el mismo archivo completo en cada paso, sin bloqueo.
+El proceso viejo termino su lote (con datos en memoria de ANTES del arreglo) y sobreescribio el
+reinicio. Se detecto porque las notas viejas (`parse error before `?''`) seguian apareciendo
+despues de "arreglarlas"; se volvio a reiniciar con el proceso viejo ya confirmado muerto
+(`pgrep` vacio) antes de tocar el archivo de nuevo. **Leccion**: nunca editar `progreso.tsv` a
+mano mientras `lote_avanzar.py` este corriendo en otra terminal — confirmar con `pgrep -af
+lote_avanzar` en WSL que no hay nada vivo antes.
+
+**Estado a las 2026-09-22 ~21:15**, con los dos bugs ya corregidos y una pasada limpia en curso
+(sigue corriendo sola en segundo plano, este conteo va a seguir subiendo sin que nadie la
+vigile): **39 DISTINTO, 7 IGUAL, 30 NO_COMPILA (causas reales, no ruido), resto SIN_EMPEZAR**.
+Los 5 IGUAL originales sobrevivieron intactos durante todo el incidente. Para ver el conteo
+actual en cualquier momento:
+
+```
+awk -F'\t' 'NR>1{print $(NF-1)}' progreso.tsv | sort | uniq -c
+```
+
+Si esa pasada ya no esta corriendo (`pgrep -af lote_avanzar` vacio en WSL) y quedan
+`SIN_EMPEZAR`, retomar con el comando de arriba (`lote_avanzar.py 500`). Con los dos bugs
+corregidos, los buckets grandes de la tabla de la seccion anterior (variable no inicializada,
+prototipo faltante) deberian bajar mucho — falta medirlo con la pasada terminada.

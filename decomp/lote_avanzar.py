@@ -3,6 +3,7 @@
 # hace falta, intenta verificar, y guarda el resultado en progreso.tsv DESPUES DE CADA UNA
 # (no en lotes), tal como pidio Meme. No corrige nada a mano: solo corre lo automatico y
 # clasifica el resultado real. Correr dentro de WSL, con el venv activado, desde decomp/.
+import re
 import subprocess
 import sys
 import os
@@ -37,8 +38,16 @@ def clasificar_no_compila(salida):
         motivo = "ld"
     else:
         motivo = "?"
-    ultima = [l for l in salida.strip().splitlines() if l.strip()]
-    detalle = ultima[-1][:160] if ultima else ""
+    lineas = [l for l in salida.strip().splitlines() if l.strip()]
+    # cc1-27 (gcc 2.7 viejo) no siempre dice "error:"/"warning:" como el gcc moderno: una linea
+    # real de error trae "archivo.c:NUMERO:", una de puro contexto es "archivo.c: In function"
+    # (sin numero) y el ruido final es "for each function it appears in.)". Prefiere una linea
+    # con numero que no sea warning; si todas son warnings, usa la ultima con numero.
+    con_numero = [l for l in lineas if re.search(r"\.c:\d+:", l)]
+    error = next((l for l in con_numero if "warning:" not in l), None)
+    if error is None:
+        error = con_numero[-1] if con_numero else (lineas[-1] if lineas else "")
+    detalle = error[:160]
     return f"NO_COMPILA ({motivo}): {detalle}"
 
 
@@ -54,7 +63,8 @@ def procesar(nombre):
             detalle = ""
             if os.path.exists(log):
                 with open(log, encoding="utf-8", errors="replace") as f:
-                    detalle = f.read().strip().splitlines()[-1][:160] if f else ""
+                    contenido = f.read().strip().splitlines()
+                detalle = contenido[-1][:160] if contenido else ""  # log vacio: bug real, no IndexError
             return "NO_COMPILA", f"m2c no genero borrador: {detalle or r.stderr[:160]}"
 
     try:
